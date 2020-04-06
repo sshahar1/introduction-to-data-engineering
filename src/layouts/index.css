@@ -1,0 +1,241 @@
+:root {
+    --bg: #1e1e1e;
+    --meta: #888;
+    --accent: #3178cd;
+    --text: #ffffff;
+    --base: 1.5rem;
+    --bg2: #f47620;
+}
+
+@media (max-width: 600px) {
+    :root {
+        --base: 1.2rem;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    font-family: 'Quicksand', sans-serif, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol';
+    font-size: var(--base);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: 'calt', 'liga', 'hist', 'onum', 'pnum';
+
+    overflow: auto;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    color: var(--text);
+    background-color: var(--bg);
+}
+
+#slide {
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+    padding: 1rem;
+    text-align: center;
+    -webkit-overflow-scrolling: touch;
+}
+
+#slide ul,
+#slide ol {
+    text-align: left;
+    margin: 32px;
+}
+
+li {
+    padding-left: 1rem;
+    line-height: 2rem;
+}
+
+a {
+    color: var(--text);
+    text-decoration-skip-ink: auto;
+}
+
+blockquote {
+    font-size: 1.4em;
+    width: 60%;
+    margin: 50px auto;
+    font-family: Open Sans;
+    font-style: italic;
+    color: #555555;
+    padding: 1.2em 30px 1.2em 75px;
+    border-left: 8px solid #78c0a8;
+    line-height: 1.6;
+    position: relative;
+    background: #ededed;
+}
+
+blockquote::before {
+    font-family: Arial;
+    content: '\201C';
+    color: #78c0a8;
+    font-size: 4em;
+    position: absolute;
+    left: 10px;
+    top: -10px;
+}
+
+blockquote::after {
+    content: '';
+}
+
+blockquote span {
+    display: block;
+    color: #333333;
+    font-style: normal;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+@media (max-width: 900px) {
+    blockquote {
+        width: 90vw;
+    }
+}
+
+blockquote div::before {
+    content: '\201C';
+}
+
+blockquote div::after {
+    content: '\201D';
+}
+
+cite {
+    font-size: 80%;
+    font-weight: normal;
+    font-style: normal;
+
+    display: block;
+
+    margin-top: 2rem;
+}
+
+cite::before {
+    content: '\2014\00a0';
+}
+
+pre {
+    font-size: 70%;
+    max-width: 95vw;
+
+    display: inline-block;
+    overflow: scroll;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    text-align: left;
+
+    color: var(--accent);
+}
+
+code {
+    font-family: menlo, monospace;
+    overflow: auto;
+    max-height: 530px;
+    color: cornflowerblue;
+    font-style: italic;
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+h1 {
+    font-size: 200%;
+
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 120%;
+    margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    /* position: fixed;
+    top: 0;
+    width: 100%; */
+}
+
+p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+footer {
+    font-size: 50%;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    padding: 5px 20px;
+
+    user-select: none;
+    color: var(--bg);
+    background-color: var(--bg2);
+}
+
+.footer__logo {
+    width: 2rem;
+    height: 2rem;
+    background-color: black;
+}
+
+img {
+    max-height: 500px;
+}
+
+.slide-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
+header a,
+time {
+    text-decoration: none;
+
+    color: var(--meta);
+}
+
+header a:hover {
+    color: var(--meta);
+}
+
+header span {
+    color: var(--text);
+}
+
+sidebyside {
+    display: flex;
+    justify-content: space-around;
+}
+
+sidebyside > div {
+    text-align: left;
+}
+
+sidebyside > pre {
+    max-width: 48vw;
+    margin-right: 1rem;
+}

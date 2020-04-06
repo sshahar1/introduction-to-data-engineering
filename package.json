@@ -1,0 +1,39 @@
+{
+  "name": "gatsby-deck",
+  "description": "Create presentations using Gatsby, React & Markdown.",
+  "version": "2.0.0",
+  "author": "Fabian Schultz <desk@fabianschultz.com>",
+  "dependencies": {
+    "gatsby": "^2.18.1",
+    "gatsby-plugin-layout": "^1.1.15",
+    "gatsby-plugin-offline": "^3.0.22",
+    "gatsby-plugin-react-helmet": "^3.1.15",
+    "gatsby-plugin-sharp": "^2.3.2",
+    "gatsby-remark-copy-linked-files": "^2.1.30",
+    "gatsby-remark-images": "^3.1.32",
+    "gatsby-source-filesystem": "^2.1.38",
+    "gatsby-transformer-remark": "^2.6.37",
+    "gatsby-transformer-sharp": "^2.3.5",
+    "highlight.js": "^9.16.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
+    "react-swipeable": "^5.4.0",
+    "react-transition-group": "^4.3.0"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-starter"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"src/**/*.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1"
+  }
+}
