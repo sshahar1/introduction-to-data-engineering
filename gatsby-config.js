@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    name: `Assaf Gannon`,
-    title: `Tikal's Expert Academy ™ 2019`,
-    date: `October 27, 2019`,
+    name: `Sigal Shaharabani`,
+    title: `Tikal's Expert Academy ™ 2020`,
+    date: `April 8, 2020`,
   },
   plugins: [
     `gatsby-plugin-layout`,
