@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     name: `Sigal Shaharabani`,
-    title: `Tikal's Expert Academy ™ 2020`,
+    title: `Tikal Knowledge ™ 2020`,
     date: `April 8, 2020`,
   },
   plugins: [
