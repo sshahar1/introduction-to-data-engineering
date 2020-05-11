@@ -1,3 +1,7 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c479f9f0-be13-4386-8f22-759544713212/deploy-status)](https://app.netlify.com/sites/hardcore-galileo-55838f/deploys)
+
+# Introduction to Data Entineering
+
 # Presentation Deck Template
 
 ## Usage
