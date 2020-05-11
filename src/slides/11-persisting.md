@@ -3,3 +3,4 @@
 * For the decision the following questions should be asked:
     * How will the data be consumed?
     * How is the data structured?
+    * What the SLA is
