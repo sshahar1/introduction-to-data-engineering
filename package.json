@@ -21,6 +21,9 @@
     "react-swipeable": "^5.4.0",
     "react-transition-group": "^4.3.0"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "keywords": [
     "gatsby",
     "gatsby-starter"
