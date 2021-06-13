@@ -4,21 +4,21 @@
   "version": "2.0.0",
   "author": "Fabian Schultz <desk@fabianschultz.com>",
   "dependencies": {
-    "gatsby": "^2.18.1",
-    "gatsby-plugin-layout": "^1.1.15",
-    "gatsby-plugin-offline": "^3.0.22",
-    "gatsby-plugin-react-helmet": "^3.1.15",
-    "gatsby-plugin-sharp": "^2.3.2",
-    "gatsby-remark-copy-linked-files": "^2.1.30",
-    "gatsby-remark-images": "^3.1.32",
-    "gatsby-source-filesystem": "^2.1.38",
-    "gatsby-transformer-remark": "^2.6.37",
-    "gatsby-transformer-sharp": "^2.3.5",
-    "highlight.js": "^10.4.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-helmet": "^5.2.1",
-    "react-swipeable": "^5.4.0",
+    "gatsby": "^3.0.0",
+    "gatsby-plugin-layout": "^2.7.1",
+    "gatsby-plugin-offline": "^4.7.1",
+    "gatsby-plugin-react-helmet": "^4.7.1",
+    "gatsby-plugin-sharp": "^3.7.1",
+    "gatsby-remark-copy-linked-files": "^4.4.1",
+    "gatsby-remark-images": "^5.4.1",
+    "gatsby-source-filesystem": "^3.7.1",
+    "gatsby-transformer-remark": "^4.4.1",
+    "gatsby-transformer-sharp": "^3.7.1",
+    "highlight.js": "^11.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-swipeable": "^6.1.2",
     "react-transition-group": "^4.3.0"
   },
   "engines": {
@@ -37,6 +37,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "prettier": "^2.3.1"
   }
 }
