@@ -15,8 +15,8 @@
     "gatsby-transformer-remark": "6.12.3",
     "gatsby-transformer-sharp": "^5.12.3",
     "highlight.js": "^11.0.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",
     "react-swipeable": "^6.1.2",
     "react-transition-group": "^4.3.0"
