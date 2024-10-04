@@ -1,1 +1,2 @@
-![Case study](./Casestudy.png)
+# Case Study
+![Case study](Casestudy.png)

@@ -1,17 +1,19 @@
-import React, { useEffect, useCallback } from 'react';
+import React, {useEffect, useCallback, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import { navigate, StaticQuery, graphql } from 'gatsby';
 import Helmet from 'react-helmet';
-import { Swipeable } from 'react-swipeable';
 import Transition from '../components/transition';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/darcula.css';
 import logo from '../resources/logo.png';
+import { useSwipeable } from 'react-swipeable';
 
 import './index.css';
 
+// noinspection JSUnusedLocalSymbols
 const Footer = ({ name, title, date, index }) => {
-  return (
+  // noinspection JSValidateTypes - logo is a resource
+    return (
     <footer>
       <img className="footer__logo" src={logo} alt="Tikal" />
       <div>{title}</div>
@@ -20,8 +22,13 @@ const Footer = ({ name, title, date, index }) => {
   );
 };
 
+const Swipeable = ({children, ...props}) => {
+    const handlers = useSwipeable(props);
+    return (<div { ...handlers }>{children}</div>);
+}
+
 function TemplateWrapper(props) {
-  const NEXT = [13, 32, 39];
+    const NEXT = useMemo(() => [13, 32, 39], []);
   const PREV = 37;
 
   const data = props.data || { slide: { index: 1 } };
@@ -37,9 +44,11 @@ function TemplateWrapper(props) {
         } else if (NEXT.indexOf(keyCode) !== -1 && now === slidesLength) {
           return false;
         } else if (NEXT.indexOf(keyCode) !== -1) {
-          navigate(`/${now + 1}`);
+          // noinspection JSIgnoredPromiseFromCall
+            navigate(`/${now + 1}`);
         } else if (keyCode === PREV) {
-          navigate(`/${now - 1}`);
+          // noinspection JSIgnoredPromiseFromCall
+            navigate(`/${now - 1}`);
         }
       }
     },
@@ -101,9 +110,10 @@ TemplateWrapper.propTypes = {
   data: PropTypes.object,
 };
 
-export default props => (
-  <StaticQuery
-    query={graphql`
+function extracted() {
+    return props => (
+        <StaticQuery
+            query={graphql`
       query IndexQuery {
         site {
           siteMetadata {
@@ -121,12 +131,16 @@ export default props => (
         }
       }
     `}
-    render={data => (
-      <TemplateWrapper
-        site={data.site}
-        slidesLength={data.allSlide.edges.length}
-        {...props}
-      />
-    )}
-  />
-);
+            render={data => (
+                <TemplateWrapper
+                    site={data.site}
+                    slidesLength={data.allSlide.edges.length}
+                    {...props}
+                />
+            )}
+        />
+    );
+}
+
+// noinspection JSUnusedGlobalSymbols
+export default extracted();
