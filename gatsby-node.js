@@ -1,11 +1,10 @@
 const path = require('path');
-const _ = require('lodash');
 
 // Remove trailing slash
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, _) => {
     // Remove trailing slash
     const newPage = Object.assign({}, page, {
       path: page.path === `/` ? page.path : page.path.replace(/\/$/, ``),
@@ -76,7 +75,7 @@ exports.createPages = ({ actions, createContentDigest, createNodeId, graphql }) 
   });
 };
 
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(`
     type Slide implements Node {
       html: String
@@ -84,3 +83,4 @@ exports.sourceNodes = ({ actions }) => {
     }
   `);
 };
+
