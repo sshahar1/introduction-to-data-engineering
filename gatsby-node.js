@@ -42,6 +42,7 @@ exports.createPages = ({ actions, createContentDigest, createNodeId, graphql }) 
       return Promise.reject(result.errors);
     }
 
+    // noinspection JSUnresolvedReference
     const slides = result.data.allMarkdownRemark.edges;
     slides.sort((a, b) => a.node.fileAbsolutePath > b.node.fileAbsolutePath ? 1 : -1)
     const nodes = slides.flatMap((s) => s.node.html.split('<hr>').map((html) => ({
