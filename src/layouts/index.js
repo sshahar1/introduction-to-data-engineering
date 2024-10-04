@@ -2,11 +2,11 @@ import React, {useEffect, useCallback, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import { navigate, StaticQuery, graphql } from 'gatsby';
 import Helmet from 'react-helmet';
-import { Swipeable } from 'react-swipeable';
 import Transition from '../components/transition';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/darcula.css';
 import logo from '../resources/logo.png';
+import { useSwipeable } from 'react-swipeable';
 
 import './index.css';
 
@@ -20,6 +20,11 @@ const Footer = ({ name, title, date, index }) => {
     </footer>
   );
 };
+
+const Swipeable = ({children, ...props}) => {
+    const handlers = useSwipeable(props);
+    return (<div { ...handlers }>{children}</div>);
+}
 
 function TemplateWrapper(props) {
     const NEXT = useMemo(() => [13, 32, 39], []);
