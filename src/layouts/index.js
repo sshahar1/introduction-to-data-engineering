@@ -139,4 +139,5 @@ function extracted() {
     );
 }
 
+// noinspection JSUnusedGlobalSymbols
 export default extracted();
