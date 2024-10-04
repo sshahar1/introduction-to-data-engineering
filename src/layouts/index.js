@@ -12,7 +12,8 @@ import './index.css';
 
 // noinspection JSUnusedLocalSymbols
 const Footer = ({ name, title, date, index }) => {
-  return (
+  // noinspection JSValidateTypes - logo is a resource
+    return (
     <footer>
       <img className="footer__logo" src={logo} alt="Tikal" />
       <div>{title}</div>
@@ -43,9 +44,11 @@ function TemplateWrapper(props) {
         } else if (NEXT.indexOf(keyCode) !== -1 && now === slidesLength) {
           return false;
         } else if (NEXT.indexOf(keyCode) !== -1) {
-          navigate(`/${now + 1}`);
+          // noinspection JSIgnoredPromiseFromCall
+            navigate(`/${now + 1}`);
         } else if (keyCode === PREV) {
-          navigate(`/${now - 1}`);
+          // noinspection JSIgnoredPromiseFromCall
+            navigate(`/${now - 1}`);
         }
       }
     },
