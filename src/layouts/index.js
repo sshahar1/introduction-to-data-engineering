@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, {useEffect, useCallback, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import { navigate, StaticQuery, graphql } from 'gatsby';
 import Helmet from 'react-helmet';
@@ -10,6 +10,7 @@ import logo from '../resources/logo.png';
 
 import './index.css';
 
+// noinspection JSUnusedLocalSymbols
 const Footer = ({ name, title, date, index }) => {
   return (
     <footer>
@@ -21,7 +22,7 @@ const Footer = ({ name, title, date, index }) => {
 };
 
 function TemplateWrapper(props) {
-  const NEXT = [13, 32, 39];
+    const NEXT = useMemo(() => [13, 32, 39], []);
   const PREV = 37;
 
   const data = props.data || { slide: { index: 1 } };
@@ -101,9 +102,10 @@ TemplateWrapper.propTypes = {
   data: PropTypes.object,
 };
 
-export default props => (
-  <StaticQuery
-    query={graphql`
+function extracted() {
+    return props => (
+        <StaticQuery
+            query={graphql`
       query IndexQuery {
         site {
           siteMetadata {
@@ -121,12 +123,15 @@ export default props => (
         }
       }
     `}
-    render={data => (
-      <TemplateWrapper
-        site={data.site}
-        slidesLength={data.allSlide.edges.length}
-        {...props}
-      />
-    )}
-  />
-);
+            render={data => (
+                <TemplateWrapper
+                    site={data.site}
+                    slidesLength={data.allSlide.edges.length}
+                    {...props}
+                />
+            )}
+        />
+    );
+}
+
+export default extracted();
