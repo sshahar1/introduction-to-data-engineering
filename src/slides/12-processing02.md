@@ -1,3 +1,6 @@
+---
+title: "Beware"
+---
 # Note
 * Though it is very nifty to show new data ASAP batch processing would always be more efficient
 * It is thus important to think about:

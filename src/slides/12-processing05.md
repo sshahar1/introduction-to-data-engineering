@@ -1,3 +1,6 @@
+---
+title: "Lambda architecture"
+---
 # What if you need both streaming and batch processing?
 * Some frameworks claim that the same code can be run in both modes
 * In real-life that might not be the way to go, because:

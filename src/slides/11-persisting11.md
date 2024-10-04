@@ -1,3 +1,6 @@
+---
+title: "Document dbs"
+---
 # Document stores
 * Designed for retrieving and managing document-oriented information
 * Unlike key-value stores document stores rely on internal structure of the document

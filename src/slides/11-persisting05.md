@@ -1,3 +1,6 @@
+---
+title: "Streaming choices"
+---
 # Popular choices are
 * Kafka, Pulsar and NATS
 * Proprietary cloud solutions

@@ -1,3 +1,6 @@
+---
+title: "Collecting the data - considerations"
+---
 # Collecting the data
 * Your considerations should be:
     - How is the data “coming”? Files copied/uploaded, stream of data

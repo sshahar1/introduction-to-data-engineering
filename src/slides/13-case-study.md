@@ -1,3 +1,6 @@
+---
+title: "Case study"
+---
 # Case Study
 * Architecture:
     * Multiple systems deployed in a cloud region

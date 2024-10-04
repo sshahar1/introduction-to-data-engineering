@@ -1,3 +1,6 @@
+---
+title: "Batch processing"
+---
 # Batch processing
 * Refers to processing of an accumulated data
 * Unless a one-time data preparation, a scheduler is required to trigger executions on new data

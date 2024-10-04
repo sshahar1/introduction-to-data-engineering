@@ -1,3 +1,6 @@
+---
+title: "Micro-batch"
+---
 # Is it really streaming?
 * Not all frameworks used for streaming data actually stream new data one-by-one
 * Some are limited to micro-batches meaning:

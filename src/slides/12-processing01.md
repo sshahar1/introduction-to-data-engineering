@@ -1,3 +1,6 @@
+---
+title: "Stream processing"
+---
 # Streaming
 * Refers to processing new data from an unbounded stream or a very small batch (aka micro batch)
 * This allows a very short wait for new data to arrive

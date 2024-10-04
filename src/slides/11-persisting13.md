@@ -1,3 +1,6 @@
+---
+title: "GraphDb"
+---
 # Graph stores
 * Data is represented by a graph structure
   * Vertex

@@ -1,3 +1,6 @@
+---
+title: "Stream/Batch"
+---
 # Data processing
 * Data processing is split into two mechanisms:
   * Stream processing
