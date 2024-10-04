@@ -2,14 +2,13 @@ import React from 'react';
 import { graphql } from 'gatsby';
 
 function extracted() {
-    return ({data, transition}) => (
-        <div
-            style={transition && transition.style}
-            dangerouslySetInnerHTML={{__html: data.slide.html}}
-            className="slide-content"
-        />
-
-    );
+  return ({ data, transition }) => (
+    <div
+      style={transition && transition.style}
+      dangerouslySetInnerHTML={{ __html: data.slide.html }}
+      className="slide-content"
+    />
+  );
 }
 
 export default extracted();

@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback, useMemo} from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { navigate, StaticQuery, graphql } from 'gatsby';
 import Helmet from 'react-helmet';
@@ -13,7 +13,7 @@ import './index.css';
 // noinspection JSUnusedLocalSymbols
 const Footer = ({ name, title, date, index }) => {
   // noinspection JSValidateTypes - logo is a resource
-    return (
+  return (
     <footer>
       <img className="footer__logo" src={logo} alt="Tikal" />
       <div>{title}</div>
@@ -22,13 +22,13 @@ const Footer = ({ name, title, date, index }) => {
   );
 };
 
-const Swipeable = ({children, ...props}) => {
-    const handlers = useSwipeable(props);
-    return (<div { ...handlers }>{children}</div>);
-}
+const Swipeable = ({ children, ...props }) => {
+  const handlers = useSwipeable(props);
+  return <div {...handlers}>{children}</div>;
+};
 
 function TemplateWrapper(props) {
-    const NEXT = useMemo(() => [13, 32, 39], []);
+  const NEXT = useMemo(() => [13, 32, 39], []);
   const PREV = 37;
 
   const data = props.data || { slide: { index: 1 } };
@@ -45,10 +45,10 @@ function TemplateWrapper(props) {
           return false;
         } else if (NEXT.indexOf(keyCode) !== -1) {
           // noinspection JSIgnoredPromiseFromCall
-            navigate(`/${now + 1}`);
+          navigate(`/${now + 1}`);
         } else if (keyCode === PREV) {
           // noinspection JSIgnoredPromiseFromCall
-            navigate(`/${now - 1}`);
+          navigate(`/${now - 1}`);
         }
       }
     },
@@ -111,35 +111,35 @@ TemplateWrapper.propTypes = {
 };
 
 function extracted() {
-    return props => (
-        <StaticQuery
-            query={graphql`
-      query IndexQuery {
-        site {
-          siteMetadata {
-            name
-            title
-            date
+  return (props) => (
+    <StaticQuery
+      query={graphql`
+        query IndexQuery {
+          site {
+            siteMetadata {
+              name
+              title
+              date
+            }
           }
-        }
-        allSlide {
-          edges {
-            node {
-              id
+          allSlide {
+            edges {
+              node {
+                id
+              }
             }
           }
         }
-      }
-    `}
-            render={data => (
-                <TemplateWrapper
-                    site={data.site}
-                    slidesLength={data.allSlide.edges.length}
-                    {...props}
-                />
-            )}
+      `}
+      render={(data) => (
+        <TemplateWrapper
+          site={data.site}
+          slidesLength={data.allSlide.edges.length}
+          {...props}
         />
-    );
+      )}
+    />
+  );
 }
 
 // noinspection JSUnusedGlobalSymbols
