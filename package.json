@@ -33,6 +33,7 @@
   "main": "n/a",
   "scripts": {
     "clean": "gatsby clean",
+    "prepare": "husky install",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"src/**/*.js\"",
