@@ -19,7 +19,8 @@
     "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",
     "react-swipeable": "^6.1.2",
-    "react-transition-group": "^4.3.0"
+    "react-transition-group": "^4.3.0",
+    "prop-types": "^15.8.1"
   },
   "engines": {
     "node": ">=20.0.0"
@@ -31,6 +32,7 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
+    "clean": "gatsby clean",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"src/**/*.js\"",
