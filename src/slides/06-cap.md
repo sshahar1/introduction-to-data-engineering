@@ -1,3 +1,6 @@
+---
+title: "What's wrong with it?"
+---
 # Sounds perfect, but it is not that simple
 
 * Let us discuss the following characteristics about a distributed system:

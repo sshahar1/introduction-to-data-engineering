@@ -1,3 +1,6 @@
+---
+title: "Distributed computing"
+---
 # Distributed what?
 * File systems
 * Messaging

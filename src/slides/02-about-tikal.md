@@ -1,3 +1,6 @@
+---
+title: "About Tikal"
+---
 # Who are we?
 
 * Tikal Knowledge established in 1999

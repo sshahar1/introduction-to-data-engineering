@@ -1,3 +1,6 @@
+---
+title: "Getting started with DE"
+---
 # How would you get started?
 1. Collecting the data from all sources
 1. Persisting the data
