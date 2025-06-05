@@ -4029,7 +4029,7 @@ cheerio-select@^2.1.0:
     domhandler "^5.0.3"
     domutils "^3.0.1"
 
-cheerio@^1.0.0-rc.10:
+cheerio@1.0.0-rc.12, cheerio@^1.0.0-rc.10:
   version "1.0.0-rc.12"
   resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.12.tgz#788bf7466506b1c6bf5fae51d24a2c4d62e47683"
   integrity sha512-VqR8m68vM46BNnuZ5NtnGBKIE/DfN0cRIzg9n40EIq9NOv90ayxLBXA8fXC5gquFRGJSTRqBq25Jt2ECLR431Q==
@@ -6535,14 +6535,14 @@ gatsby-plugin-layout@^4.12.0:
   dependencies:
     "@babel/runtime" "^7.20.13"
 
-gatsby-plugin-offline@^6.12.3:
-  version "6.12.3"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-offline/-/gatsby-plugin-offline-6.12.3.tgz#c17340d685e97491fe863360f2bfef0856857259"
-  integrity sha512-Kc2BP3PttdwtjRp17tkgsLjd6AcObK73GfL85krgOtbaC+R52u3Htagd8kgHJ+evIoIDRrnXgPk+cTuRmXTidQ==
+gatsby-plugin-offline@^6.14.0:
+  version "6.14.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-offline/-/gatsby-plugin-offline-6.14.0.tgz#3999e44c6ae2c84ebc19d04626d2e4aaf4bff72b"
+  integrity sha512-uvQhwZ1HhPZoLJDYdZ+OTWsz/QRz3hNqF+QVhihPRZ9jjgXsPAqKGTgrWM0Btaf6DiNImz10PTo1/SRsp0UDgQ==
   dependencies:
     "@babel/runtime" "^7.20.13"
-    cheerio "^1.0.0-rc.10"
-    gatsby-core-utils "^4.12.1"
+    cheerio "1.0.0-rc.12"
+    gatsby-core-utils "^4.14.0"
     glob "^7.2.3"
     idb-keyval "^3.2.0"
     lodash "^4.17.21"
