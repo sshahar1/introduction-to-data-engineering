@@ -20,7 +20,8 @@
     "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",
     "react-swipeable": "^6.1.2",
-    "react-transition-group": "^4.3.0"
+    "react-transition-group": "^4.3.0",
+    "tar-fs": "^3.0.9"
   },
   "engines": {
     "node": ">=20.0.0"
