@@ -4426,7 +4426,7 @@ cookie-signature@1.0.6:
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
   integrity sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==
 
-cookie@0.6.0:
+cookie@0.6.0, cookie@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.6.0.tgz#2798b04b071b0ecbff0dbb62a505a8efa4e19051"
   integrity sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==
@@ -6405,19 +6405,19 @@ functions-have-names@^1.2.3:
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.3.tgz#0404fe4ee2ba2f607f0e0ec3c80bae994133b834"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
 
-gatsby-adapter-netlify@^1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/gatsby-adapter-netlify/-/gatsby-adapter-netlify-1.1.7.tgz#4052101de0712dd61a84aec24c1d4feb09fdacdc"
-  integrity sha512-BuNb8DHHwXCuZ3UB6gQJKJTeBaz7rgCAEe3DutkD3AQstqmyEwUl/zKLZK4MH9DJouS+c6uUTqltsl0N9zJZpQ==
+gatsby-adapter-netlify@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/gatsby-adapter-netlify/-/gatsby-adapter-netlify-1.2.0.tgz#3abfebc43d0e6680436c640ec7ca079daa345840"
+  integrity sha512-B7L9Z0HSr/z02lG0fRovtE4WcbgCbfDzwPyRNGjk4GE0cttuHQtibpd1kglekKdajm70wyT0imvV7IBAKajg9Q==
   dependencies:
     "@babel/runtime" "^7.20.13"
     "@netlify/cache-utils" "^5.1.5"
     "@netlify/config" "^20.10.0"
     "@netlify/functions" "^1.6.0"
-    cookie "^0.5.0"
+    cookie "^0.6.0"
     fastq "^1.15.0"
-    fs-extra "^11.1.1"
-    gatsby-core-utils "^4.13.1"
+    fs-extra "^11.2.0"
+    gatsby-core-utils "^4.14.0"
 
 gatsby-cli@^5.14.0:
   version "5.14.0"
@@ -6469,28 +6469,6 @@ gatsby-core-utils@^4.12.1:
   version "4.12.1"
   resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-4.12.1.tgz#8bfa0d65033cfa4c47dd199482589e458bf4fc9d"
   integrity sha512-YW7eCK2M6yGQerT5LkdOHLZTNYMsDvcgeDMRy0q66FWKj7twPZX428I6NaLCMeF5dYoj1HOOO0u96iNlW5jcKQ==
-  dependencies:
-    "@babel/runtime" "^7.20.13"
-    ci-info "2.0.0"
-    configstore "^5.0.1"
-    fastq "^1.15.0"
-    file-type "^16.5.4"
-    fs-extra "^11.1.1"
-    got "^11.8.6"
-    hash-wasm "^4.9.0"
-    import-from "^4.0.0"
-    lmdb "2.5.3"
-    lock "^1.1.0"
-    node-object-hash "^2.3.10"
-    proper-lockfile "^4.1.2"
-    resolve-from "^5.0.0"
-    tmp "^0.2.1"
-    xdg-basedir "^4.0.0"
-
-gatsby-core-utils@^4.13.1:
-  version "4.13.1"
-  resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-4.13.1.tgz#57955316486cc85ab150922f481484bc9287205e"
-  integrity sha512-w7G6SsQr8T2q+AJ1MxvRNGocCt+wjc22MiRLj2Zi3Ijpjszbr818JxwI4+aPt8WOSHlKT5SYCHICnEvcYPm9gg==
   dependencies:
     "@babel/runtime" "^7.20.13"
     ci-info "2.0.0"
