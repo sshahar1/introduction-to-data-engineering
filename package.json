@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "author": "Sigal Shaharabani <sigals@tikalk.com>",
   "dependencies": {
-    "gatsby": "^5.14.3",
+    "gatsby": "^5.15.0",
     "gatsby-adapter-netlify": "^1.2.0",
     "gatsby-plugin-layout": "^4.12.0",
     "gatsby-plugin-offline": "^6.14.0",
