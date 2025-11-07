@@ -6361,10 +6361,10 @@ functions-have-names@^1.2.3:
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.3.tgz#0404fe4ee2ba2f607f0e0ec3c80bae994133b834"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
 
-gatsby-adapter-netlify@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/gatsby-adapter-netlify/-/gatsby-adapter-netlify-1.2.0.tgz#3abfebc43d0e6680436c640ec7ca079daa345840"
-  integrity sha512-B7L9Z0HSr/z02lG0fRovtE4WcbgCbfDzwPyRNGjk4GE0cttuHQtibpd1kglekKdajm70wyT0imvV7IBAKajg9Q==
+gatsby-adapter-netlify@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/gatsby-adapter-netlify/-/gatsby-adapter-netlify-1.3.0.tgz#82cd29802f48d29ed04963d7241d630095fd3f69"
+  integrity sha512-T+i5GxC/zYA2y9+KOGpFEQSqAdwmCD6nf3HD5dHPevIytKcPC54f36haRkGY4F+0qgUsMbW4yTt0uc6yRlF4qQ==
   dependencies:
     "@babel/runtime" "^7.20.13"
     "@netlify/cache-utils" "^5.1.5"
@@ -6373,7 +6373,7 @@ gatsby-adapter-netlify@^1.2.0:
     cookie "^0.6.0"
     fastq "^1.15.0"
     fs-extra "^11.2.0"
-    gatsby-core-utils "^4.14.0"
+    gatsby-core-utils "^4.15.0"
 
 gatsby-cli@^5.15.0:
   version "5.15.0"
