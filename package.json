@@ -22,7 +22,8 @@
     "react-swipeable": "^6.1.2",
     "react-transition-group": "^4.3.0",
     "tar-fs": "^3.1.1",
-    "cookie": "^0.7.2"
+    "cookie": "^0.7.2",
+    "@expo/devcert": "^1.2.1"
   },
   "engines": {
     "node": ">=20.0.0"
