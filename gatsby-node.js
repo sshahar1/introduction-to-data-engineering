@@ -61,6 +61,12 @@ exports.createPages = ({ actions, createContentDigest, createNodeId, graphql }) 
         html: html,
         index: index + 1,
       });
+
+      console.log(`Creating Slide node ${index + 1} with HTML length: ${html.length}`);
+
+      createNode({
+        id: createNodeId(`${node.id}_${index + 1} >>> Slide`),
+      });
     });
 
     nodes.forEach((slide, index) => {
