@@ -17,7 +17,10 @@
 ## ADR-001: Slide Deck Built as a Static-Site-Generated Web App (Gatsby)
 
 ### Status
-Accepted (Discovered from codebase; approved 2026-10-26)
+Accepted
+
+### Provenance
+Discovered from codebase (brownfield, `/architect-init`); approved via `/architect-clarify` on 2026-10-26
 
 ### Date
 2026-10-26
@@ -79,7 +82,10 @@ frameworks is unknown (repo appears to originate from a Gatsby presentation star
 ## ADR-002: Slide Content Model — Markdown Files Split on `<hr>`, Ordered by File Path
 
 ### Status
-Accepted (Discovered from codebase; approved 2026-10-26)
+Accepted
+
+### Provenance
+Discovered from codebase (brownfield, `/architect-init`); approved via `/architect-clarify` on 2026-10-26
 
 ### Date
 2026-10-26
@@ -152,7 +158,10 @@ HIGH - Directly readable in `gatsby-node.js`; URL trade-off confirmed by owner.
 ## ADR-003: In-House Presentation Runtime (Navigation, Transitions)
 
 ### Status
-Accepted (Discovered from codebase; approved 2026-10-26)
+Accepted
+
+### Provenance
+Discovered from codebase (brownfield, `/architect-init`); approved via `/architect-clarify` on 2026-10-26
 
 ### Date
 2026-10-26
@@ -220,7 +229,10 @@ HIGH - All behaviour is visible in three small files.
 ## ADR-004: Netlify Hosting with Platform-Side Builds, No Repository CI
 
 ### Status
-Accepted (Discovered from codebase; approved 2026-10-26)
+Accepted
+
+### Provenance
+Discovered from codebase (brownfield, `/architect-init`); approved via `/architect-clarify` on 2026-10-26
 
 ### Date
 2026-10-26
@@ -292,7 +304,10 @@ HIGH - Netlify use evident in repo; deploy branch and settings location confirme
 ## ADR-005: Offline-Capable PWA via Service Worker
 
 ### Status
-Accepted (Discovered from codebase; approved 2026-10-26)
+Accepted
+
+### Provenance
+Discovered from codebase (brownfield, `/architect-init`); approved via `/architect-clarify` on 2026-10-26
 
 ### Date
 2026-10-26
@@ -354,7 +369,10 @@ HIGH - Plugin enabled and intent confirmed by owner (2026-10-26).
 ## ADR-006: Evolution Strategy — Incremental Upgrades of an Aging Gatsby Starter
 
 ### Status
-Accepted (Discovered from codebase; approved 2026-10-26)
+Accepted
+
+### Provenance
+Discovered from codebase (brownfield, `/architect-init`); approved via `/architect-clarify` on 2026-10-26
 
 ### Date
 2026-10-26
