@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { navigate, StaticQuery, graphql } from 'gatsby';
 import Helmet from 'react-helmet';
 import Transition from '../components/transition';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/darcula.css';
 import logo from '../resources/logo.png';
 import { useSwipeable } from 'react-swipeable';
 
@@ -62,13 +60,6 @@ function TemplateWrapper(props) {
   const swipeRight = () => {
     doNavigate({ keyCode: PREV });
   };
-
-  useEffect(() => {
-    hljs.initHighlighting();
-    return () => {
-      hljs.initHighlighting.called = false;
-    };
-  });
 
   useEffect(() => {
     document.addEventListener('keydown', doNavigate);

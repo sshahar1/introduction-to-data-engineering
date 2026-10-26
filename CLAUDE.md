@@ -41,7 +41,6 @@
 - **react-helmet**: ^6.1.0 (document head management)
 - **react-swipeable**: ^6.1.2 (touch/swipe support)
 - **react-transition-group**: ^4.3.0 (animations)
-- **highlight.js**: ^10.7.3 (syntax highlighting)
 - **prop-types**: ^15.8.1 (React prop validation)
 - **eslint**: ^9.26.0** (linting)
 - **prettier**: ^3.3.3 (code formatting)
