@@ -46,18 +46,18 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
 **Purpose**: Capture the baseline, swap the toolchain, and remove Gatsby.
 
-- [ ] T001 Capture the pre-migration baseline per quickstart.md V0. Open production `/1`…`/40` at 1920×1080 and 375×812 for side-by-side review. Save `curl -sI https://hardcore-galileo-55838f.netlify.app/1` output to the session scratchpad (not the repo). In one browser profile, visit production so it holds the Gatsby service worker (needed for T038).
-- [ ] T002 Rewrite `package.json`:
+- [ ] T001 *(headers + per-slide HTML captured 2026-10-26 in session scratchpad; screenshots and the browser profile with the Gatsby worker still to do — production keeps serving Gatsby until merge)* Capture the pre-migration baseline per quickstart.md V0. Open production `/1`…`/40` at 1920×1080 and 375×812 for side-by-side review. Save `curl -sI https://hardcore-galileo-55838f.netlify.app/1` output to the session scratchpad (not the repo). In one browser profile, visit production so it holds the Gatsby service worker (needed for T038).
+- [x] T002 Rewrite `package.json`:
   - Remove all 19 entries under `dependencies` (every `gatsby*` package, `react`, `react-dom`, `react-helmet`, `react-swipeable`, `react-transition-group`, `prop-types`, `@expo/devcert`, `cookie`, `tar-fs`). Add `"astro": "^7.4.2"`.
   - Add `"prettier-plugin-astro": "^1.1.2"` to `devDependencies`. Keep the other devDependencies.
   - Set `scripts` to: `develop` = `astro dev --port 8000`, `build` = `astro build`, `clean` = `rm -rf dist .astro node_modules/.astro`, `serve` = `astro preview --port 8000`, `format` = `prettier --write "src/**/*.{js,astro}" "*.mjs"`. Keep `prepare` and `test`.
   - Change `description` to "Introduction to data engineering presentation with Astro", and `keywords` to `["astro", "presentation"]`.
   - Run `yarn install` to regenerate `yarn.lock`. Do not create `package-lock.json`.
-- [ ] T003 [P] Create `astro.config.mjs` with `defineConfig({ trailingSlash: 'never', build: { format: 'file' }, image: { layout: 'constrained', breakpoints: [640, 750, 828, 1080, 1280, 1668, 1920] }, devToolbar: { enabled: false } })` (research R3, R5; plan § Accepted differences). The `breakpoints` list caps generated responsive widths at 1920px, which constitution §IV requires. Astro's defaults go higher.
-- [ ] T004 [P] Update `.gitignore`: remove the `.cache/` and `public/` lines and the "Build directory" comment, and add `dist/` and `.astro/` (research R8).
-- [ ] T005 [P] Update `.prettierrc`: remove `"parser": "babel"`, add `"plugins": ["prettier-plugin-astro"]`, and add `"overrides": [{ "files": "*.astro", "options": { "parser": "astro" } }]` (research R8).
-- [ ] T006 [P] Create `netlify.toml` with `[build]`, `command = "yarn build"`, `publish = "dist"` (FR-017, research R8).
-- [ ] T007 Delete the Gatsby source files: `gatsby-config.js`, `gatsby-node.js`, `src/templates/slide.js`, `src/components/transition.js`, `src/layouts/index.js`, `src/pages/index.js`, `src/pages/404.js`. Remove the now-empty `src/templates/` and `src/components/`. Keep `src/layouts/index.css`, `src/resources/` and `src/slides/` untouched.
+- [x] T003 [P] Create `astro.config.mjs` with `defineConfig({ trailingSlash: 'never', build: { format: 'file' }, image: { layout: 'constrained', breakpoints: [640, 750, 828, 1080, 1280, 1668, 1920] }, devToolbar: { enabled: false } })` (research R3, R5; plan § Accepted differences). The `breakpoints` list caps generated responsive widths at 1920px, which constitution §IV requires. Astro's defaults go higher.
+- [x] T004 [P] Update `.gitignore`: remove the `.cache/` and `public/` lines and the "Build directory" comment, and add `dist/` and `.astro/` (research R8).
+- [x] T005 [P] Update `.prettierrc`: remove `"parser": "babel"`, add `"plugins": ["prettier-plugin-astro"]`, and add `"overrides": [{ "files": "*.astro", "options": { "parser": "astro" } }]` (research R8).
+- [x] T006 [P] Create `netlify.toml` with `[build]`, `command = "yarn build"`, `publish = "dist"` (FR-017, research R8).
+- [x] T007 Delete the Gatsby source files: `gatsby-config.js`, `gatsby-node.js`, `src/templates/slide.js`, `src/components/transition.js`, `src/layouts/index.js`, `src/pages/index.js`, `src/pages/404.js`. Remove the now-empty `src/templates/` and `src/components/`. Keep `src/layouts/index.css`, `src/resources/` and `src/slides/` untouched.
 
 ---
 
@@ -67,8 +67,8 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T008 [P] Create `src/site.js` exporting `site = { name: 'Sigal Shaharabani', title: 'Tikal Knowledge ™ 2020', date: 'April 8, 2020' }` (data-model.md § SiteMetadata).
-- [ ] T009 Create `src/content.config.js` defining a `slides` collection with an inline custom loader (research R2, data-model.md § Slide). The loader should:
+- [x] T008 [P] Create `src/site.js` exporting `site = { name: 'Sigal Shaharabani', title: 'Tikal Knowledge ™ 2020', date: 'April 8, 2020' }` (data-model.md § SiteMetadata).
+- [x] T009 Create `src/content.config.js` defining a `slides` collection with an inline custom loader (research R2, data-model.md § Slide). The loader should:
   1. List `src/slides/*.md` and sort the paths as plain strings.
   2. For each file, separate the YAML frontmatter and read its `title`.
   3. Split the body into chunks at lines that match `^ {0,3}(-{3,}|\*{3,}|_{3,})\s*$`, only when the previous line is blank (or it is the body's first line), and never inside fenced code (lines starting with ` ``` ` or `~~~` toggle fence state). Keep empty chunks.
@@ -77,7 +77,7 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
   6. Throw `no slides found in src/slides` if zero entries result.
 
   Keep the file under about 100 lines (team rule CDR-2026-022).
-- [ ] T010 Create `src/layouts/Deck.astro`. Props are `index` (number or undefined) and `total` (number or undefined). It renders:
+- [x] T010 Create `src/layouts/Deck.astro`. Props are `index` (number or undefined) and `total` (number or undefined). It renders:
   - `<html lang="en">`
   - `<head>` with `<meta charset="utf-8">`, `<meta name="viewport" content="width=device-width, initial-scale=1">`, and `<title>{site.title} — {site.name}</title>`
   - an import of `./index.css` in the frontmatter
@@ -85,8 +85,8 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
   - `<footer>` with `<img class="footer__logo" src={logo.src} alt="Tikal">` (logo imported from `../resources/logo.png`), `<div>{site.title}</div>` and `<div>{index}</div>`
 
   Copy the markup order and class names from the deleted `src/layouts/index.js` so `src/layouts/index.css` applies unchanged (contracts/routes.md § Page document contract).
-- [ ] T011 Create `src/pages/[slide].astro`. `getStaticPaths()` calls `getCollection('slides')`, sorts by `data.index`, and returns `{ params: { slide: String(index) }, props: { entry, total } }`. The page renders `const { Content } = await render(entry)` inside `<Deck index={entry.data.index} total={total}><div class="slide-content"><Content /></div></Deck>`.
-- [ ] T012 Run `yarn format`, then `yarn build`. Expect `dist/1.html`…`dist/40.html`. If the build reports sharp missing, add `sharp` to `dependencies` and note why in the PR (research R1, R9).
+- [x] T011 Create `src/pages/[slide].astro`. `getStaticPaths()` calls `getCollection('slides')`, sorts by `data.index`, and returns `{ params: { slide: String(index) }, props: { entry, total } }`. The page renders `const { Content } = await render(entry)` inside `<Deck index={entry.data.index} total={total}><div class="slide-content"><Content /></div></Deck>`.
+- [x] T012 Run `yarn format`, then `yarn build`. Expect `dist/1.html`…`dist/40.html`. If the build reports sharp missing, add `sharp` to `dependencies` and note why in the PR (research R1, R9).
 
 **Checkpoint**: `yarn build` passes and `yarn develop` serves `/1`…`/40`. Commit Phases 1–2 together.
 
@@ -98,9 +98,9 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
 **Independent Test**: quickstart.md V3. Side-by-side review of all 40 slides at desktop and mobile against the T001 baseline.
 
-- [ ] T013 [US1] Compare the image slides `/3` (me.JPG), `/9` (CAP-Theorem-last.jpg) and `/39` (Casestudy.png), all now in `src/resources/`, against the baseline. If centring or size differs, add a scoped rule to `src/layouts/index.css`, e.g. `.slide-content img { display: block; margin: 0 auto; }`, matching Gatsby's `gatsby-resp-image-wrapper` (research R5). Otherwise leave the CSS untouched.
+- [x] T013 [US1] Compare the image slides `/3` (me.JPG), `/9` (CAP-Theorem-last.jpg) and `/39` (Casestudy.png), all now in `src/resources/`, against the baseline. If centring or size differs, add a scoped rule to `src/layouts/index.css`, e.g. `.slide-content img { display: block; margin: 0 auto; }`, matching Gatsby's `gatsby-resp-image-wrapper` (research R5). Otherwise leave the CSS untouched.
 - [ ] T014 [US1] Do the full side-by-side review of quickstart.md V3 (40 slides × 2 sizes = 80 comparisons) against the T001 baseline, using `yarn build && yarn serve`. Check footer colour, logo and number, the browser tab title, list and blockquote indentation, and the ≤ 600px font size. Record every noticed difference, with its resolution or acceptance, in `specs/001-gatsby-to-astro-migration/review-notes.md` (FR-014, SC-001).
-- [ ] T015 [US1] In DevTools Network on `/1`, confirm the fonts load from the site's own origin (`/_astro/*.woff2`) and nothing is requested from a third-party host (FR-009).
+- [x] T015 [US1] In DevTools Network on `/1`, confirm the fonts load from the site's own origin (`/_astro/*.woff2`) and nothing is requested from a third-party host (FR-009).
 
 **Checkpoint**: The deck looks identical. Commit.
 
@@ -112,11 +112,11 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
 **Independent Test**: quickstart.md V4 on `/1`, `/20` and `/40` (contracts/navigation.md).
 
-- [ ] T016 [P] [US2] Create `src/scripts/navigation.js` per contracts/navigation.md:
+- [x] T016 [P] [US2] Create `src/scripts/navigation.js` per contracts/navigation.md:
   - `go(delta)` reads `#slide` `dataset.index` and `dataset.total` at call time. It returns early when they're missing (404 page) or out of bounds; otherwise it calls `navigate('/' + (n + delta))` from `astro:transitions/client`.
   - A `document` `keydown` listener maps `ArrowRight`, `Enter` and `' '` → `go(1)`, and `ArrowLeft` → `go(-1)`, with no `preventDefault`.
   - `touchstart` and `touchend` listeners on `document` compute `dx` and `dy`. When `Math.abs(dx) >= 10 && Math.abs(dx) > Math.abs(dy)`, swiping left calls `go(1)` and swiping right calls `go(-1)`.
-- [ ] T017 [US2] Edit `src/layouts/Deck.astro`:
+- [x] T017 [US2] Edit `src/layouts/Deck.astro`:
   - Add `<ClientRouter />` (from `astro:transitions`) to `<head>`.
   - Put `transition:animate="none"` on `<html>`, `transition:animate={fade({ duration: '0.2s' })}` on `#slide`, and `transition:animate="none"` on `<footer>`.
   - Add `<script>import '../scripts/navigation.js';</script>` at the end of `<body>` (research R4).
@@ -132,10 +132,10 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
 **Independent Test**: The quickstart.md V5 `curl` route checks (contracts/routes.md § Routes).
 
-- [ ] T019 [P] [US3] Add `redirects: { '/': '/1' }` to `astro.config.mjs` (dev-server parity, research R3).
-- [ ] T020 [P] [US3] Create `public/_redirects` containing the single rule `/  /1  302!` (FR-006).
-- [ ] T021 [P] [US3] Create `src/pages/404.astro`. It renders `<Deck><div><h1>NOT FOUND</h1><p>You just hit a route that doesn't exist... the sadness.</p></div></Deck>`, with no `index` or `total`, so there is no footer number and no navigation (FR-007; plan § Accepted differences).
-- [ ] T022 [US3] Run `yarn build`. Confirm `dist/404.html` and `dist/_redirects` exist. In `yarn develop`, confirm `/` lands on `/1`, and `/999` shows NOT FOUND.
+- [x] T019 [P] [US3] Add `redirects: { '/': '/1' }` to `astro.config.mjs` (dev-server parity, research R3).
+- [x] T020 [P] [US3] Create `public/_redirects` containing the single rule `/  /1  302!` (FR-006).
+- [x] T021 [P] [US3] Create `src/pages/404.astro`. It renders `<Deck><div><h1>NOT FOUND</h1><p>You just hit a route that doesn't exist... the sadness.</p></div></Deck>`, with no `index` or `total`, so there is no footer number and no navigation (FR-007; plan § Accepted differences).
+- [x] T022 [US3] Run `yarn build`. Confirm `dist/404.html` and `dist/_redirects` exist. In `yarn develop`, confirm `/` lands on `/1`, and `/999` shows NOT FOUND.
 
 **Checkpoint**: Routing works locally. Commit. Trailing-slash and production redirect behaviour are checked on the preview in T025.
 
@@ -147,8 +147,8 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
 **Independent Test**: quickstart.md V2 plus a green Netlify deploy preview.
 
-- [ ] T023 [US4] Run quickstart.md V2. Add a temporary `src/slides/11-persisting045.md` with two chunks separated by a blank line and `---`, plus one setext heading (`Title` followed directly by `---`). Confirm two slides appear right after the `11-persisting04` slide and the setext line renders as `<h2>`. Then delete the file (FR-002, FR-003).
-- [ ] T024 [US4] Run `yarn clean`, `yarn develop`, `yarn build`, `yarn serve` and `yarn format`. Confirm each works and that `yarn format` reformats `.astro` files. Make a trivial whitespace edit in `src/layouts/Deck.astro` and commit it to confirm the husky pre-commit hook (`.husky/pre-commit`) formats it (FR-022).
+- [x] T023 [US4] Run quickstart.md V2. Add a temporary `src/slides/11-persisting045.md` with two chunks separated by a blank line and `---`, plus one setext heading (`Title` followed directly by `---`). Confirm two slides appear right after the `11-persisting04` slide and the setext line renders as `<h2>`. Then delete the file (FR-002, FR-003).
+- [x] T024 [US4] Run `yarn clean`, `yarn develop`, `yarn build`, `yarn serve` and `yarn format`. Confirm each works and that `yarn format` reformats `.astro` files. Make a trivial whitespace edit in `src/layouts/Deck.astro` and commit it to confirm the husky pre-commit hook (`.husky/pre-commit`) formats it (FR-022).
 - [ ] T025 [US4] Before pushing, check the Netlify site in the dashboard:
   - **Site configuration → Build & deploy → Build plugins**: no Gatsby plugin, e.g. `@netlify/plugin-gatsby` or "Essential Gatsby".
   - **Build settings**: framework not pinned to Gatsby.
@@ -167,16 +167,16 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
 **Independent Test**: quickstart.md V5 (headers and worker) and V6 (offline local run).
 
-- [ ] T026 [P] [US5] Create `public/_headers` per contracts/routes.md § Response headers:
+- [x] T026 [P] [US5] Create `public/_headers` per contracts/routes.md § Response headers:
   - `/*`: the exact CSP string, `Permissions-Policy`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, and `Referrer-Policy` (the T001 baseline value, default `same-origin`).
   - `/_astro/*`: `Cache-Control: public, max-age=31536000, immutable`.
   - `/sw.js`: `Cache-Control: no-cache` (FR-018, research R6).
-- [ ] T027 [P] [US5] Create `public/sw.js` as a kill-switch worker (research R7):
+- [x] T027 [P] [US5] Create `public/sw.js` as a kill-switch worker (research R7):
   - On `install`, `self.skipWaiting()`.
   - On `activate`, `event.waitUntil` of: delete all `caches.keys()`, then `self.registration.unregister()`, then `self.clients.matchAll({ type: 'window' })` and `client.navigate(client.url)` for each.
 
   Confirm no file under `src/` calls `navigator.serviceWorker.register` (FR-019, FR-020).
-- [ ] T028 [P] [US5] Add a "Presenting without network" section to `README.md`. It says to run `yarn install && yarn build` while online, and `yarn serve` at the venue, then open `http://localhost:8000/1` (FR-020).
+- [x] T028 [P] [US5] Add a "Presenting without network" section to `README.md`. It says to run `yarn install && yarn build` while online, and `yarn serve` at the venue, then open `http://localhost:8000/1` (FR-020).
 - [ ] T029 [US5] On the deploy preview, run the quickstart.md V5 header `curl` and compare it with the T001 baseline. Every header must be present and at least as strict. Then run quickstart.md V6 (`yarn build && yarn serve` with networking off) (SC-005).
 - [ ] T041 [US5] Pre-merge local test of worker retirement, on one origin, `http://localhost:8000` (FR-019, SC-006):
   1. `git worktree add ../ide-gatsby master`, then in that worktree run `yarn install && yarn build && yarn gatsby serve -p 8000`.
@@ -198,13 +198,13 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 - [ ] T031 Create ADR-007 "Astro static site generator" (supersedes ADR-001 and ADR-006) and ADR-008 "No offline worker; local-build venue fallback" (supersedes ADR-005), via `/architect-specify` with this spec as input. Then run `/architect-clarify`.
 - [ ] T032 Set the status of `.specify/memory/adr/ADR-001.md`, `ADR-005.md` and `ADR-006.md` to "Superseded by ADR-007/008". Add an "Implementation updated 2026-10" note to `ADR-002.md` (loader splits Markdown source) and `ADR-003.md` (vanilla-JS navigation + ClientRouter). Update `.specify/memory/adr/index.md`.
 - [ ] T033 Regenerate `AD.md` and `.specify/architect/views/system/*.md` via `/architect-implement`.
-- [ ] T034 [P] Update `CLAUDE.md`:
+- [x] T034 [P] Update `CLAUDE.md`:
   - commands (`yarn develop|build|clean|format|serve`)
   - Key Directories (`public/`, `src/scripts/`, `src/content.config.js`; remove `src/templates`, `src/components`)
   - Key Configuration Files (`astro.config.mjs`, `netlify.toml`, `public/_headers`)
   - Key Dependencies
   - Image Handling, Deployment (`dist/`), Troubleshooting and Slide Navigation sections
-- [ ] T035 [P] Update the rest of `README.md`: fix "`src/slides.md`" to `src/slides/`, describe the `---` splitting rule including the setext caveat, and mention Astro.
+- [x] T035 [P] Update the rest of `README.md`: fix "`src/slides.md`" to `src/slides/`, describe the `---` splitting rule including the setext caveat, and mention Astro.
 - [ ] T036 Run quickstart.md V7: `grep -i gatsby package.json` and the docs grep (expect no output outside superseded ADRs), `yarn audit --level high` (no high or critical), and confirm 9 or fewer declared dependencies (SC-004, SC-008).
 - [ ] T037 Run a final `yarn format && yarn build`. Write the PR description in `specs/001-gatsby-to-astro-migration/` style, with: dependency justification for `astro` and `prettier-plugin-astro` (constitution §V), accepted differences from `review-notes.md` and plan.md, and the post-merge check list. End with the Claude Code attribution line.
 - [ ] T038 After merge to `master`, run quickstart.md V5 "Worker retirement" in the T001 browser profile against production. Confirm the new deck shows, no service worker is registered, and Cache Storage is empty. Also confirm a fresh profile has no worker (SC-006).
