@@ -199,6 +199,9 @@ rather than a slide framework: each slide is a route, navigation is a client-sid
   (2026-10-26): same-origin Content-Security-Policy in `gatsby-config.js` blocks third-party
   scripts, plugins and framing; `'unsafe-inline'` remains because of Gatsby's inline scripts
 - Performance: highlighting runs on every render (effect has no dependency array)
+- Performance: the full highlight.js build (190 language grammars) is bundled although no
+  slide contains a code block; it makes up most of the ~308 KB compressed `app.js`
+  (found 2026-10-26, see AD.md §4.2.1 PT-1)
 
 ### Common Alternatives
 #### Embed a slide engine (reveal.js / spectacle) inside Gatsby

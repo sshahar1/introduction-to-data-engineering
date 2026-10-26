@@ -608,12 +608,40 @@ _Source: [.specify/architect/views/system/deployment.md](.specify/architect/view
 
 ### 4.2 Performance & Scalability Perspective
 
+#### 4.2.1 Performance Targets
+
+Measured 2026-10-26 against production (`/1/` and `/13/`, compressed transfer, cold cache).
+Load-time metrics use Google's Core Web Vitals "good" thresholds; they were **not measured**
+(no local Chrome, and the PageSpeed Insights API quota was exhausted) and must be checked with
+[PageSpeed Insights](https://pagespeed.web.dev/) on the mobile profile.
+
+| ID | Metric | Target | Measured | Status |
+|----|--------|--------|----------|--------|
+| PT-1 | JavaScript per first load (compressed) | ≤ 120 KB | 354 KB (`app.js` 308 KB, framework 44 KB, runtime 2 KB) | ❌ Fails |
+| PT-2 | Total first-load weight (compressed, incl. fonts and logo) | ≤ 300 KB | ~394 KB (latin-ext font only loads for extended characters) | ❌ Fails |
+| PT-3 | Requests per first load | ≤ 15 | 8–9 | ✅ |
+| PT-4 | Server response time (TTFB, HTML from CDN) | ≤ 600 ms | ~340 ms | ✅ |
+| PT-5 | Self-hosted font weight | ≤ 40 KB | 15 KB (latin), +15 KB (latin-ext, on demand) | ✅ |
+| PT-6 | Largest processed slide image | ≤ 200 KB | 29 KB (logo); slide images ≤ 23 KB | ✅ |
+| PT-7 | Largest Contentful Paint (mobile, p75) | ≤ 2.5 s | Not measured | ⚠️ Verify |
+| PT-8 | Cumulative Layout Shift | ≤ 0.1 | Not measured | ⚠️ Verify |
+| PT-9 | Interaction to Next Paint (key press → next slide) | ≤ 200 ms (plus the 200 ms fade) | Not measured | ⚠️ Verify |
+| PT-10 | Offline: any visited slide loads with network off | 100% of visited slides | Not measured | ⚠️ Verify |
+| PT-11 | Production build time | ≤ 2 min | 13–33 s locally | ✅ (local) |
+
+**Main gap (PT-1, PT-2):** `src/layouts/index.js` imports the full `highlight.js` build, which
+registers 190 language grammars, but no slide contains a code block. Removing it, or importing
+only the languages actually used, is the single largest improvement available (ADR-003).
+
+#### 4.2.2 Assessment
+
 | Aspect | Assessment | ADR |
 |--------|------------|-----|
 | Response time | Pre-rendered pages from CDN edge; no server compute | ADR-001, ADR-004 |
 | Scalability | Scales with CDN; audience size not a constraint | ADR-004 |
 | Repeat/offline loads | Served from service-worker cache | ADR-005 |
 | Critical path | Same-origin self-hosted font (~31 KB woff2, `font-display: swap`) | ADR-005 |
+| Bundle size | Full highlight.js bundle dominates first-load JavaScript (see PT-1) | ADR-003 |
 | Runtime hot path | Code highlighting re-runs every render (no dependency array) | ADR-003 |
 | Build time | Dominated by sharp image processing; acceptable at ~45 slides | ADR-002 |
 
