@@ -205,8 +205,8 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
   - Key Dependencies
   - Image Handling, Deployment (`dist/`), Troubleshooting and Slide Navigation sections
 - [x] T035 [P] Update the rest of `README.md`: fix "`src/slides.md`" to `src/slides/`, describe the `---` splitting rule including the setext caveat, and mention Astro.
-- [ ] T036 Run quickstart.md V7: `grep -i gatsby package.json` and the docs grep (expect no output outside superseded ADRs), `yarn audit --level high` (no high or critical), and confirm 9 or fewer declared dependencies (SC-004, SC-008).
-- [ ] T037 Run a final `yarn format && yarn build`. Write the PR description in `specs/001-gatsby-to-astro-migration/` style, with: dependency justification for `astro` and `prettier-plugin-astro` (constitution §V), accepted differences from `review-notes.md` and plan.md, and the post-merge check list. End with the Claude Code attribution line.
+- [x] T036 Run quickstart.md V7: `grep -i gatsby package.json` and the docs grep (expect no output outside superseded ADRs), `yarn audit --level high` (no high or critical), and confirm 9 or fewer declared dependencies (SC-004, SC-008).
+- [x] T037 Run a final `yarn format && yarn build`. Write the PR description in `specs/001-gatsby-to-astro-migration/` style, with: dependency justification for `astro` and `prettier-plugin-astro` (constitution §V), accepted differences from `review-notes.md` and plan.md, and the post-merge check list. End with the Claude Code attribution line.
 - [ ] T038 After merge to `master`, run quickstart.md V5 "Worker retirement" in the T001 browser profile against production. Confirm the new deck shows, no service worker is registered, and Cache Storage is empty. Also confirm a fresh profile has no worker (SC-006).
 - [ ] T039 After merge, run `/architect-analyze` to confirm the ADRs and AD.md are consistent. The postponed A2/E1 follow-ups are now moot.
 
