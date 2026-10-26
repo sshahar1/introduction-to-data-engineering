@@ -27,9 +27,9 @@
 graph LR
     Dev["Developer machine<br/>(Node.js 22)"]
     GH["GitHub repository<br/>(master)"]
-    NB["Netlify build runner"]
+    NB["Build & Hosting Platform:<br/>build (Netlify)"]
     NPM["npm registry"]
-    CDN["Netlify CDN edge"]
+    CDN["Build & Hosting Platform:<br/>CDN edge (Netlify)"]
     BR["Audience / presenter browser"]
     SW["Service-worker cache<br/>(in browser)"]
 
