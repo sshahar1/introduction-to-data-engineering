@@ -3,18 +3,18 @@
 ## Development Commands
 
 ### Common Development Tasks
-- **Start development server**: `npm run develop` (runs `gatsby develop`)
-- **Build for production**: `npm run build` (runs `gatsby build`)
-- **Clean cache**: `npm run clean` (runs `gatsby clean`)
-- **Format code**: `npm run format` (runs `prettier --write "src/**/*.js"`)
-- **Install husky hooks**: `npm run prepare` (runs `husky`)
+- **Start development server**: `yarn develop` (runs `gatsby develop`)
+- **Build for production**: `yarn build` (runs `gatsby build`)
+- **Clean cache**: `yarn clean` (runs `gatsby clean`)
+- **Format code**: `yarn format` (runs `prettier --write "src/**/*.js"`)
+- **Install husky hooks**: `yarn prepare` (runs `husky`)
 
 ### Development Workflow
-1. Start development: `npm run develop`
+1. Start development: `yarn develop`
 2. Make changes to source files in `src/`
 3. Code is automatically formatted on commit via husky pre-commit hook
-4. Build for production: `npm run build`
-5. Preview production build: `npm run serve` (after building)
+4. Build for production: `yarn build`
+5. Preview production build: `yarn gatsby serve` (after building)
 
 ## Project Structure
 
@@ -51,14 +51,14 @@
 
 ### Code Formatting
 - JavaScript files are automatically formatted on commit via husky + prettier
-- Manual formatting: `npm run format`
-- ESLint is configured but not automatically run on commit
+- Manual formatting: `yarn format`
+- ESLint 9 is installed but not configured (no `eslint.config.*`), and it does not run on commit
 
 ### Slide Creation
 - Slides are markdown files in `src/slides/`
 - Images can be placed in `src/resources/` and referenced in markdown
 - Use standard markdown syntax for content
-- Use HTML/JSX within markdown for interactive components
+- Prefer plain Markdown; use inline HTML/JSX only when Markdown cannot express the content (constitution §I)
 - Image processing is handled by `gatsby-remark-images`
 
 ### Component Usage
@@ -84,9 +84,9 @@
 
 ### Common Issues
 1. **Image processing issues**: Ensure images are in `src/resources/` or referenced correctly in markdown
-2. **Build failures**: Run `npm run clean` then `npm run build` to clear cache
-3. **Formatting issues**: Run `npm run format` to auto-format JavaScript files
-4. **Dependency issues**: Delete `node_modules` and `package-lock.json`, then run `npm install`
+2. **Build failures**: Run `yarn clean` then `yarn build` to clear cache
+3. **Formatting issues**: Run `yarn format` to auto-format JavaScript files
+4. **Dependency issues**: Delete `node_modules`, then run `yarn install` (`yarn.lock` is the only lockfile — never commit a `package-lock.json`)
 
 ### Development Server
 - Default URL: http://localhost:8000

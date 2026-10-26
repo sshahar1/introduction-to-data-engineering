@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "extensions": {
+    "team-ai-directives": {
+      "version": "4.3.3",
+      "source": "local",
+      "manifest_hash": "sha256:02a0c8b43defb639a9dc775f43dc2fabdad64b432f82e09321250230953c86f1",
+      "enabled": true,
+      "priority": 1,
+      "registered_commands": {
+        "claude": [
+          "team.boot",
+          "team.discover",
+          "team.curate",
+          "team.evolve",
+          "team.repair",
+          "team.skills",
+          "team.verify"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-10-26T09:48:16.422126+00:00"
+    },
+    "agent-context": {
+      "version": "1.3.0",
+      "source": "local",
+      "manifest_hash": "sha256:b6fe0f25a66a13a94821818f351921ef5e7e1225bfd41761fdf73f7613548770",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "claude": [
+          "speckit.agent-context.update"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-10-26T09:48:16.459394+00:00"
+    },
+    "architect": {
+      "version": "2.2.0",
+      "source": "local",
+      "manifest_hash": "sha256:4677a5814a55ede5fa7e6eec1764c4d1013849e38a38769cc5e4ada881e425a4",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "claude": [
+          "architect.init",
+          "architect.specify",
+          "architect.clarify",
+          "architect.implement",
+          "architect.analyze",
+          "architect.validate"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-10-26T09:53:19.725549+00:00"
+    }
+  }
+}

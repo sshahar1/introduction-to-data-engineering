@@ -1,0 +1,61 @@
+{
+  "workflow": {
+    "source": "brownfield",
+    "decomposition": "disabled",
+    "perspectives": [
+      "security",
+      "performance",
+      "evolution"
+    ],
+    "clarify_completed": true,
+    "clarify_completed_at": "2026-10-26T00:00:00Z",
+    "adrs_approved_count": 6,
+    "implement_started": true,
+    "implement_started_at": "2026-10-26T10:01:51Z"
+  },
+  "version": "1.1.0",
+  "created_at": "2026-10-26T10:01:51Z",
+  "updated_at": "2026-10-26T10:12:59Z",
+  "phase": "completed",
+  "views_mode": "core",
+  "subsystems": [
+    {
+      "id": "system",
+      "name": "System",
+      "adrs": [
+        "ADR-001",
+        "ADR-002",
+        "ADR-003",
+        "ADR-004",
+        "ADR-005",
+        "ADR-006"
+      ],
+      "characteristics": [
+        "monolith",
+        "static-site"
+      ],
+      "dag": [
+        "context",
+        "functional",
+        "information",
+        "development",
+        "deployment"
+      ],
+      "progress": {
+        "context": "completed",
+        "functional": "completed",
+        "information": "completed",
+        "development": "completed",
+        "deployment": "completed"
+      }
+    }
+  ],
+  "perspectives": [
+    "security",
+    "performance",
+    "evolution"
+  ],
+  "conflicts_detected": [],
+  "conflicts_resolved": [],
+  "output_file": "AD.md"
+}

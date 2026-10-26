@@ -1,0 +1,30 @@
+{
+  "ai": "claude",
+  "ai_skills": true,
+  "feature_numbering": "sequential",
+  "here": true,
+  "integration": "claude",
+  "script": "sh",
+  "speckit_version": "unknown",
+  "team_ai_directives": "/Users/sigals/team-ai-directives",
+  "team_ai_directives_mcp": {
+    "mcpServers": {
+      "context7": {
+        "args": [
+          "-y",
+          "@upstash/context7-mcp"
+        ],
+        "command": "npx"
+      }
+    },
+    "tools": {
+      "github": {
+        "baseUrl": "https://api.github.com",
+        "owner": "GITHUB_OWNER",
+        "repo": "GITHUB_REPO",
+        "tokenEnv": "GITHUB_TOKEN",
+        "type": "github"
+      }
+    }
+  }
+}
