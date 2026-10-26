@@ -195,8 +195,8 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
 *(T030, the constitution amendment, moved to Phase 0 and is done.)*
 
-- [ ] T031 Create ADR-007 "Astro static site generator" (supersedes ADR-001 and ADR-006) and ADR-008 "No offline worker; local-build venue fallback" (supersedes ADR-005), via `/architect-specify` with this spec as input. Then run `/architect-clarify`.
-- [ ] T032 Set the status of `.specify/memory/adr/ADR-001.md`, `ADR-005.md` and `ADR-006.md` to "Superseded by ADR-007/008". Add an "Implementation updated 2026-10" note to `ADR-002.md` (loader splits Markdown source) and `ADR-003.md` (vanilla-JS navigation + ClientRouter). Update `.specify/memory/adr/index.md`.
+- [x] T031 Create ADR-007 "Astro static site generator" (supersedes ADR-001 and ADR-006) and ADR-008 "No offline worker; local-build venue fallback" (supersedes ADR-005), via `/architect-specify` with this spec as input. Then run `/architect-clarify`.
+- [x] T032 Set the status of `.specify/memory/adr/ADR-001.md`, `ADR-005.md` and `ADR-006.md` to "Superseded by ADR-007/008". Add an "Implementation updated 2026-10" note to `ADR-002.md` (loader splits Markdown source) and `ADR-003.md` (vanilla-JS navigation + ClientRouter). Update `.specify/memory/adr/index.md`.
 - [ ] T033 Regenerate `AD.md` and `.specify/architect/views/system/*.md` via `/architect-implement`.
 - [x] T034 [P] Update `CLAUDE.md`:
   - commands (`yarn develop|build|clean|format|serve`)
