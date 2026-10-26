@@ -81,12 +81,9 @@ function TemplateWrapper(props) {
   const { location, children, site } = props;
   return (
     <div>
-      <Helmet title={`${site.siteMetadata.title} — ${site.siteMetadata.name}`}>
-        <link
-          href="https://fonts.googleapis.com/css?family=Quicksand&display=swap"
-          rel="stylesheet"
-        ></link>
-      </Helmet>
+      <Helmet
+        title={`${site.siteMetadata.title} — ${site.siteMetadata.name}`}
+      />
       <Swipeable onSwipedLeft={swipeLeft} onSwipedRight={swipeRight}>
         <Transition location={location}>
           <div id="slide" style={{ width: '100%', height: '100vh' }}>

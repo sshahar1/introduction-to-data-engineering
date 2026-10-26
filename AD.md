@@ -69,7 +69,6 @@ back end (ADR-001).
 | Source Code Host (GitHub) | External System | Git push; triggers platform build | Repository contents (Markdown, code, assets) | SSH/HTTPS (git) |
 | Static Hosting & Build Platform (Netlify) | External System | Pulls `master`, builds, serves via CDN | Built HTML/JS/CSS/images | HTTPS |
 | Web Browser | External System (user agent) | Renders pages, runs service worker | Static pages, cached assets | HTTPS |
-| Web Font Provider (Google Fonts) | External System | Browser fetches stylesheet/font at runtime | Quicksand font CSS + font files | HTTPS |
 | Package Registry (npm) | External System | Build-time dependency download | JavaScript packages | HTTPS |
 
 #### 3.1.4 Context Diagram
@@ -83,7 +82,6 @@ graph TD
 
     GitHub["Source Code Host<br/>(External)"]
     Netlify["Build & Hosting Platform<br/>(External)"]
-    Fonts["Web Font Provider<br/>(External)"]
     Registry["Package Registry<br/>(External)"]
 
     Presenter -->|"Authors slides, pushes to master"| GitHub
@@ -91,7 +89,6 @@ graph TD
     Netlify -->|"Builds and serves"| System
     Presenter -->|"Presents (keyboard/swipe)"| System
     Audience -->|"Views via URL"| System
-    System -->|"Loads font at runtime"| Fonts
     System -->|"Fetches dependencies at build"| Registry
 
     classDef systemNode fill:#f47721,stroke:#333,stroke-width:3px,color:#fff
@@ -100,7 +97,7 @@ graph TD
 
     class System systemNode
     class Presenter,Audience stakeholderNode
-    class GitHub,Netlify,Fonts,Registry externalNode
+    class GitHub,Netlify,Registry externalNode
 ```
 
 #### 3.1.5 External Dependencies
@@ -109,7 +106,6 @@ graph TD
 |------------|---------|------------------|-------------------|
 | Netlify | Build + CDN hosting (ADR-004) | Provider default; no contract | Service worker serves previously cached deck offline (ADR-005); local `gatsby build` + `gatsby serve` |
 | GitHub | Source of truth, build trigger | Provider default | Local clone; manual deploy |
-| Google Fonts | Quicksand typeface | Best effort | Browser falls back to system font (not cached offline — ADR-005 follow-up) |
 | npm registry | Build-time packages | Best effort | `yarn.lock` pins versions; retry build |
 
 ---
@@ -118,7 +114,7 @@ graph TD
 
 ##### Security Considerations
 
-- Only trust boundary crossed at runtime is public HTTPS from browser to CDN and font provider;
+- Only trust boundary crossed at runtime is public HTTPS from browser to CDN (fonts are self-hosted since 2026-10-26);
   no authentication, no user data, no secrets in the deck (ADR-001).
 - Content is author-controlled and built at compile time, which is what makes raw HTML
   injection of slides acceptable (ADR-003).
@@ -130,7 +126,7 @@ _Source ADRs: ADR-001, ADR-003, ADR-006_
 ##### Performance Considerations
 
 - Pages are pre-rendered and served from CDN edge; no server latency (ADR-001, ADR-004).
-- Third-party font request is the only runtime external call on the critical render path.
+- No third-party runtime calls: the Quicksand font is served from the same origin (ADR-005).
 
 _Source ADRs: ADR-001, ADR-004, ADR-005_
 
@@ -526,7 +522,6 @@ graph LR
     CDN["Netlify CDN edge"]
     BR["Audience / presenter browser"]
     SW["Service-worker cache<br/>(in browser)"]
-    GF["Google Fonts"]
 
     Dev -->|"git push (SSH)"| GH
     GH -->|"webhook: build master"| NB
@@ -535,7 +530,6 @@ graph LR
     CDN -->|"HTTPS static files"| BR
     BR -->|"precache"| SW
     SW -->|"offline responses"| BR
-    BR -->|"HTTPS font CSS + files"| GF
 ```
 
 #### 3.6.3 Hardware Requirements
@@ -552,7 +546,6 @@ graph LR
 |---------|---------|----------|------|
 | Static hosting, CDN, builds | Production site | Netlify | Not recorded in repo (UI setting) |
 | Source hosting, build trigger | Repository `sshahar1/introduction-to-data-engineering` | GitHub | Not recorded |
-| Web fonts | Quicksand typeface | Google Fonts | Free |
 | Package registry | Build-time dependencies | npm | Public |
 
 ---
@@ -573,7 +566,7 @@ _Source ADRs: ADR-004, ADR-006_
 
 - Static files from CDN edge; latency bound by network, not compute.
 - Repeat and offline visits served from service-worker cache (ADR-005).
-- Google Fonts is a cross-origin request on first paint; self-hosting would remove it.
+- Quicksand (400, ~31 KB woff2) is self-hosted and cached by the service worker on first visit (ADR-005).
 
 _Source ADRs: ADR-001, ADR-005_
 
@@ -599,7 +592,7 @@ _Source: [.specify/architect/views/system/deployment.md](.specify/architect/view
 | Content injection (XSS) | Slide HTML injected raw; acceptable only because content is author-controlled and built at compile time | Functional | ADR-003 |
 | Publishing authority | Push access to `master` + Netlify account = ability to publish | Information, Deployment | ADR-004 |
 | Supply chain | Build installs npm packages; mitigated by `yarn.lock` and direct security pins (`tar-fs`, `cookie`, `@expo/devcert`) | Development, Deployment | ADR-006 |
-| Transport | HTTPS from CDN and font provider | Deployment | ADR-004 |
+| Transport | HTTPS from CDN; no third-party runtime origins | Deployment | ADR-004 |
 
 **Threat model (summary)**
 
@@ -616,7 +609,7 @@ _Source: [.specify/architect/views/system/deployment.md](.specify/architect/view
 | Response time | Pre-rendered pages from CDN edge; no server compute | ADR-001, ADR-004 |
 | Scalability | Scales with CDN; audience size not a constraint | ADR-004 |
 | Repeat/offline loads | Served from service-worker cache | ADR-005 |
-| Critical path | Cross-origin Google Fonts request on first paint | ADR-005 |
+| Critical path | Same-origin self-hosted font (~31 KB woff2, `font-display: swap`) | ADR-005 |
 | Runtime hot path | Code highlighting re-runs every render (no dependency array) | ADR-003 |
 | Build time | Dominated by sharp image processing; acceptable at ~45 slides | ADR-002 |
 
