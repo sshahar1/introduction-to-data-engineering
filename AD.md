@@ -555,6 +555,9 @@ graph LR
 ##### Security Considerations
 
 - Public, unauthenticated, read-only site over HTTPS; no server-side attack surface.
+- Response headers: HSTS from Netlify, Gatsby defaults (`nosniff`, `x-frame-options: DENY`,
+  `referrer-policy`), plus a same-origin `Content-Security-Policy` and a deny-all
+  `Permissions-Policy` from `gatsby-config.js` (ADR-003).
 - Deploy authority = push access to `master` on GitHub plus Netlify account access; protect
   both (ADR-004).
 - Build runner executes npm install scripts — supply-chain exposure addressed by lockfile and
@@ -589,10 +592,11 @@ _Source: [.specify/architect/views/system/deployment.md](.specify/architect/view
 |---------|------------|----------------|-----|
 | Authentication / authorisation | None required — public, read-only content | Context, Functional | ADR-001 |
 | Data protection | No PII, credentials, or secrets stored or processed | Information | ADR-001 |
-| Content injection (XSS) | Slide HTML injected raw; acceptable only because content is author-controlled and built at compile time | Functional | ADR-003 |
+| Content injection (XSS) | Slide HTML injected raw; acceptable only because content is author-controlled and built at compile time. CSP limits all scripts, styles, fonts and connections to the site's own origin | Functional, Deployment | ADR-003 |
 | Publishing authority | Push access to `master` + Netlify account = ability to publish | Information, Deployment | ADR-004 |
 | Supply chain | Build installs npm packages; mitigated by `yarn.lock` and direct security pins (`tar-fs`, `cookie`, `@expo/devcert`) | Development, Deployment | ADR-006 |
 | Transport | HTTPS from CDN; no third-party runtime origins | Deployment | ADR-004 |
+| HTTP security headers | HSTS (Netlify); `nosniff`, `x-frame-options: DENY`, `referrer-policy` (Gatsby defaults); `Content-Security-Policy` and `Permissions-Policy` set in `gatsby-config.js` `headers` (since 2026-10-26). CSP allows `'unsafe-inline'` scripts/styles because of Gatsby's inline scripts | Deployment | ADR-003, ADR-004 |
 
 **Threat model (summary)**
 
@@ -600,7 +604,7 @@ _Source: [.specify/architect/views/system/deployment.md](.specify/architect/view
 |--------|------------|--------|------------|
 | Compromised dependency at build | Medium | Defaced or malicious deck | Lockfile, pin review on upgrade, Netlify build logs |
 | Unauthorised push to `master` | Low | Defaced deck | GitHub account security, branch protection (recommended) |
-| Untrusted content added to slides | Low | XSS in viewers | Keep content author-only; sanitise if that changes |
+| Untrusted content added to slides | Low | XSS in viewers | Keep content author-only; CSP blocks third-party scripts; sanitise if that changes |
 
 ### 4.2 Performance & Scalability Perspective
 
