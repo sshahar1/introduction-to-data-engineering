@@ -12,6 +12,7 @@ export default defineConfig({
     breakpoints: [640, 750, 828, 1080, 1280, 1668, 1920],
   },
   // Keep punctuation as written, matching the previous Gatsby/remark output
-  markdown: { smartypants: false },
+  // and leave code blocks unhighlighted so index.css styles them as before
+  markdown: { smartypants: false, syntaxHighlight: false },
   devToolbar: { enabled: false },
 });
