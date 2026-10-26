@@ -67,7 +67,7 @@ back end (ADR-001).
 | Entity | Type | Interaction Type | Data Exchanged | Protocols |
 |--------|------|------------------|----------------|-----------|
 | Source Code Host (GitHub) | External System | Git push; triggers platform build | Repository contents (Markdown, code, assets) | SSH/HTTPS (git) |
-| Static Hosting & Build Platform (Netlify) | External System | Pulls `master`, builds, serves via CDN | Built HTML/JS/CSS/images | HTTPS |
+| Build & Hosting Platform (Netlify) | External System | Pulls `master`, builds, serves via CDN | Built HTML/JS/CSS/images | HTTPS |
 | Web Browser | External System (user agent) | Renders pages, runs service worker | Static pages, cached assets | HTTPS |
 | Package Registry (npm) | External System | Build-time dependency download | JavaScript packages | HTTPS |
 
@@ -89,7 +89,7 @@ graph TD
     Netlify -->|"Builds and serves"| System
     Presenter -->|"Presents (keyboard/swipe)"| System
     Audience -->|"Views via URL"| System
-    System -->|"Fetches dependencies at build"| Registry
+    Netlify -->|"Fetches dependencies at build"| Registry
 
     classDef systemNode fill:#f47721,stroke:#333,stroke-width:3px,color:#fff
     classDef stakeholderNode fill:#4a9eff,stroke:#333,stroke-width:1px,color:#fff
@@ -506,9 +506,9 @@ _Source: [.specify/architect/views/system/development.md](.specify/architect/vie
 graph LR
     Dev["Developer machine<br/>(Node.js 22)"]
     GH["GitHub repository<br/>(master)"]
-    NB["Netlify build runner"]
+    NB["Build & Hosting Platform:<br/>build (Netlify)"]
     NPM["npm registry"]
-    CDN["Netlify CDN edge"]
+    CDN["Build & Hosting Platform:<br/>CDN edge (Netlify)"]
     BR["Audience / presenter browser"]
     SW["Service-worker cache<br/>(in browser)"]
 
