@@ -149,7 +149,7 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
 - [x] T023 [US4] Run quickstart.md V2. Add a temporary `src/slides/11-persisting045.md` with two chunks separated by a blank line and `---`, plus one setext heading (`Title` followed directly by `---`). Confirm two slides appear right after the `11-persisting04` slide and the setext line renders as `<h2>`. Then delete the file (FR-002, FR-003).
 - [x] T024 [US4] Run `yarn clean`, `yarn develop`, `yarn build`, `yarn serve` and `yarn format`. Confirm each works and that `yarn format` reformats `.astro` files. Make a trivial whitespace edit in `src/layouts/Deck.astro` and commit it to confirm the husky pre-commit hook (`.husky/pre-commit`) formats it (FR-022).
-- [ ] T025 [US4] *(dashboard checked 2026-10-26: Runtime not set, no Gatsby leftovers)* Before pushing, check the Netlify site in the dashboard:
+- [x] T025 [US4] *(dashboard checked 2026-10-26: Runtime not set, no Gatsby leftovers)* Before pushing, check the Netlify site in the dashboard:
   - **Site configuration → Build & deploy → Build plugins**: no Gatsby plugin, e.g. `@netlify/plugin-gatsby` or "Essential Gatsby".
   - **Build settings**: framework not pinned to Gatsby.
 
@@ -177,7 +177,7 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
   Confirm no file under `src/` calls `navigator.serviceWorker.register` (FR-019, FR-020).
 - [x] T028 [P] [US5] Add a "Presenting without network" section to `README.md`. It says to run `yarn install && yarn build` while online, and `yarn serve` at the venue, then open `http://localhost:8000/1` (FR-020).
-- [ ] T029 [US5] On the deploy preview, run the quickstart.md V5 header `curl` and compare it with the T001 baseline. Every header must be present and at least as strict. Then run quickstart.md V6 (`yarn build && yarn serve` with networking off) (SC-005).
+- [x] T029 [US5] On the deploy preview, run the quickstart.md V5 header `curl` and compare it with the T001 baseline. Every header must be present and at least as strict. Then run quickstart.md V6 (`yarn build && yarn serve` with networking off) (SC-005).
 - [x] T041 [US5] Pre-merge local test of worker retirement, on one origin, `http://localhost:8000` (FR-019, SC-006):
   1. `git worktree add ../ide-gatsby master`, then in that worktree run `yarn install && yarn build && yarn gatsby serve -p 8000`.
   2. In a fresh browser profile, open `http://localhost:8000/1`, navigate a few slides, and confirm DevTools → Application shows the Gatsby service worker active and Cache Storage filled.

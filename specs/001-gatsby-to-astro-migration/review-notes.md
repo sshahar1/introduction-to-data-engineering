@@ -28,9 +28,20 @@ Running record of differences between the production Gatsby deck and the Astro b
 | A3 | 404 page footer shows no slide number, and keys don't navigate there (Gatsby showed "1") | Planned (plan.md § Accepted differences) |
 | A4 | Root `/` is a server-side 302 to `/1` (production: client-side JS redirect) | Required by FR-006 |
 
-## Open: URL shape (check on deploy preview, T025)
+## Deploy preview (T025, T029) — PR #131, 2026-10-26
 
-Production currently answers `/12` with **301 → `/12/`**, so links shared from the live site likely use the trailing slash. The Astro build serves `/12`; under `astro preview`, `/12/` is 404. The spec requires `/12/` to reach slide 12 or redirect to `/12`. Confirm on the Netlify deploy preview, and add a redirect rule if needed.
+The first preview build failed at install: `astro@7.4.2` requires Node ≥ 22.23.4 and `.tool-versions` pinned 22.23.2. Fixed by pinning 22.23.4 (`.tool-versions`, `netlify.toml` `NODE_VERSION`, `package.json` engines). Second build passed, with no Netlify dashboard changes.
+
+| Request | Result |
+|---|---|
+| `/` | 302 → `/1` |
+| `/1`, `/12`, `/40` | 200 |
+| `/12/` | 301 → `/12`, so shared trailing-slash links (production served `/12/`) keep working; no extra rule needed |
+| `/41`, `/999` | 404 (NOT FOUND page) |
+| `/sw.js` | 200, `Cache-Control: no-cache` |
+| `/_astro/*` | `Cache-Control: public,max-age=31536000,immutable` |
+
+Headers on `/1`, `/999` and `/` match the production baseline exactly: CSP (12 directives), Permissions-Policy, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: same-origin`, `X-XSS-Protection: 1; mode=block`.
 
 ## Visual review (T014) — to be filled in by the maintainer
 
