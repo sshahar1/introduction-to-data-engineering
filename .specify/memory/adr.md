@@ -5,7 +5,7 @@
 | ID | Sub-System | Decision | Status | Date | Owner |
 |----|------------|----------|--------|------|-------|
 | ADR-001 | System | Slide Deck Built as a Static-Site-Generated Web App (Gatsby) | Superseded | 2026-10-26 | Legacy/Inferred |
-| ADR-002 | System | Slide Content Model — Markdown Files Split on `<hr>`, Ordered by File Path | Accepted | 2026-10-26 | Legacy/Inferred |
+| ADR-002 | System | Slide Content Model — Markdown Files Split into Slides, Ordered by File Path | Accepted | 2026-10-26 | Legacy/Inferred |
 | ADR-003 | System | In-House Presentation Runtime (Navigation, Transitions) | Accepted | 2026-10-26 | Legacy/Inferred |
 | ADR-004 | System | Netlify Hosting with Platform-Side Builds, No Repository CI | Accepted | 2026-10-26 | Legacy/Inferred |
 | ADR-005 | System | Offline-Capable PWA via Service Worker | Superseded | 2026-10-26 | Legacy/Inferred |
@@ -81,7 +81,7 @@ frameworks is unknown (repo appears to originate from a Gatsby presentation star
 
 ---
 
-## ADR-002: Slide Content Model — Markdown Files Split on `<hr>`, Ordered by File Path
+## ADR-002: Slide Content Model — Markdown Files Split into Slides, Ordered by File Path
 
 ### Status
 Accepted
@@ -148,6 +148,8 @@ Slide Files); this ADR records the implementation mechanism those principles rel
 ### Clarifications
 - 2026-10-26: Owner confirmed positional URLs are an **accepted trade-off** — the deck is
   presented live and stable deep links are not required.
+- 2026-10-26: Title changed from "…Split on `<hr>`…" to "…Split into Slides…" to match the
+  source-splitting mechanism (ADR-007); the decision is unchanged.
 
 ### Implementation Updated (2026-10-26, ADR-007)
 The decision is unchanged: Markdown files in `src/slides/`, ordered by sorted file path,
