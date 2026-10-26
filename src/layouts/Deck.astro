@@ -1,0 +1,30 @@
+---
+import { site } from '../site.js';
+import logo from '../resources/logo.png';
+import './index.css';
+
+const { index, total } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{`${site.title} — ${site.name}`}</title>
+  </head>
+  <body>
+    <div
+      id="slide"
+      data-index={index}
+      data-total={total}
+      style="width: 100%; height: 100vh"
+    >
+      <slot />
+    </div>
+    <footer>
+      <img class="footer__logo" src={logo.src} alt="Tikal" />
+      <div>{site.title}</div>
+      <div>{index}</div>
+    </footer>
+  </body>
+</html>
