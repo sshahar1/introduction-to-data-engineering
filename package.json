@@ -1,44 +1,27 @@
 {
   "name": "introduction-to-data-engineering",
-  "description": "Introduction to data engineering presentation with Gatsby",
+  "description": "Introduction to data engineering presentation with Astro",
   "version": "2.0.0",
   "author": "Sigal Shaharabani <sigals@tikalk.com>",
   "dependencies": {
-    "@expo/devcert": "^1.2.1",
-    "cookie": "^0.7.2",
-    "gatsby": "^5.16.1",
-    "gatsby-adapter-netlify": "^1.4.0",
-    "gatsby-plugin-layout": "^4.12.0",
-    "gatsby-plugin-offline": "^6.16.0",
-    "gatsby-plugin-sharp": "^5.16.0",
-    "gatsby-remark-copy-linked-files": "^6.12.0",
-    "gatsby-remark-images": "^7.12.3",
-    "gatsby-source-filesystem": "^5.12.1",
-    "gatsby-transformer-remark": "6.16.0",
-    "gatsby-transformer-sharp": "^5.16.0",
-    "prop-types": "^15.8.1",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-helmet": "^6.1.0",
-    "react-swipeable": "^6.1.2",
-    "react-transition-group": "^4.3.0",
-    "tar-fs": "^3.1.1"
+    "astro": "^7.4.2"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.23.4"
   },
   "keywords": [
-    "gatsby",
-    "gatsby-starter"
+    "astro",
+    "presentation"
   ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {
-    "clean": "gatsby clean",
+    "clean": "rm -rf dist .astro node_modules/.astro",
     "prepare": "husky",
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write \"src/**/*.js\"",
+    "build": "astro build",
+    "develop": "astro dev --port 8000",
+    "serve": "astro preview --port 8000",
+    "format": "prettier --write \"src/**/*.{js,astro}\" \"*.mjs\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -48,6 +31,7 @@
     "eslint": "^9.26.0",
     "husky": "^9.1.6",
     "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^1.1.2",
     "typescript": "^4.0.0"
   }
 }

@@ -1,0 +1,7 @@
+[build]
+  command = "yarn build"
+  publish = "dist"
+
+[build.environment]
+  # Astro 7 requires Node >= 22.23.4; keep in sync with .tool-versions
+  NODE_VERSION = "22.23.4"

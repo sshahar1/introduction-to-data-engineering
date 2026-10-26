@@ -1,16 +1,25 @@
 <!--
 Sync Impact Report
-- Version change: (unversioned template) → 1.0.0
-- Modified principles (template placeholder → new title):
-  - [PRINCIPLE_1_NAME] → I. Content-First Markdown Slides
-  - [PRINCIPLE_2_NAME] → II. Ordered, Self-Contained Slide Files
-  - [PRINCIPLE_3_NAME] → III. Green Production Build (NON-NEGOTIABLE)
-  - [PRINCIPLE_4_NAME] → IV. Local, Optimized Assets
-  - [PRINCIPLE_5_NAME] → V. Simplicity & Minimal Dependencies
-- Added sections: Technology & Deployment Constraints; Development Workflow & Quality Gates
+- Version change: 1.0.0 → 2.0.0 (MAJOR: §III and §IV redefined; the Technology & Deployment
+  Constraints stack is replaced. Driven by feature 001-gatsby-to-astro-migration, analysis D1.)
+- Modified principles:
+  - I. Content-First Markdown Slides — wording only: the split separator is now described as a
+    thematic break, so a setext heading `---` is not a separator
+  - III. Green Production Build — `gatsby build` → `yarn build` (tool-agnostic); Netlify deploy
+    preview added as the pre-merge gate
+  - IV. Local, Optimized Assets — Gatsby plugin and config references removed; the 1920px cap is
+    restated as an output rule; PWA rationale removed
+  - V. Simplicity & Minimal Dependencies — adds: no client-side UI framework without §V
+    justification
+- Added sections: none
 - Removed sections: none
-- Deferred TODOs: none. Ratification date set to first adoption (2026-10-26); no earlier
-  constitution existed.
+- Technology & Deployment Constraints: the stack becomes Astro (static output) with vanilla-JS
+  navigation; there is now a rule that no service worker is registered, with a local-build venue
+  fallback; Netlify config is committed (`netlify.toml`, `public/_headers`); the stale
+  `highlight.js` entry is removed
+- Development Workflow: dev and clean commands generalised to `yarn` scripts
+- Deferred TODOs: none. Open decision outside this amendment: analysis finding D2 (3 images in
+  `src/slides/` vs §IV location rule) is unchanged here and still to be decided.
 -->
 
 # Introduction to Data Engineering Constitution
@@ -20,9 +29,10 @@ Sync Impact Report
 ### I. Content-First Markdown Slides
 
 - Presentation content MUST live as Markdown in `src/slides/`; slides MUST NOT be hard-coded
-  inside React components or pages.
-- Each slide MUST be separated by a horizontal rule (`---`), which the build splits on.
-- Inline HTML/JSX in Markdown MAY be used only when plain Markdown cannot express the content
+  inside components, layouts, or pages.
+- Slides within a file MUST be separated by a thematic break (`---` on its own line, preceded by a
+  blank line), which the build splits on. Frontmatter delimiters MUST NOT create slides.
+- Inline HTML in Markdown MAY be used only when plain Markdown cannot express the content
   (e.g., layout or interactive elements); the reason SHOULD be evident from the slide itself.
 
 Rationale: the deck exists to teach data engineering. Keeping content in Markdown lets it be
@@ -41,9 +51,10 @@ appearing in the wrong place.
 
 ### III. Green Production Build (NON-NEGOTIABLE)
 
-- `gatsby build` MUST succeed locally before any change is committed to `master`.
+- `yarn build` MUST succeed locally before any change is committed.
+- A branch MUST have a green Netlify deploy preview before it is merged to `master`.
 - A change that breaks the Netlify build MUST be fixed or reverted before other work continues.
-- Debug instrumentation added to diagnose build issues (e.g., logging in `gatsby-node.js`) MUST
+- Debug instrumentation added to diagnose build issues (e.g., logging in the content loader) MUST
   be removed once the issue is resolved.
 
 Rationale: `master` deploys directly to Netlify; a broken build means the public deck is stale
@@ -52,20 +63,24 @@ or unavailable.
 ### IV. Local, Optimized Assets
 
 - Images and other static assets MUST be stored in `src/resources/` and referenced by relative
-  path so `gatsby-remark-images` / `gatsby-plugin-sharp` can process them.
+  path so the build's image pipeline can optimize them.
 - Remote hot-linked images SHOULD be avoided; when used, the source MUST be stable and
   license-compatible.
-- Image processing MUST stay within the configured `maxWidth` (1920px) in `gatsby-config.js`.
+- Generated responsive image widths MUST NOT exceed 1920px.
+- Fonts MUST be self-hosted; slides MUST NOT depend on third-party hosts at runtime.
 
-Rationale: local assets give responsive, offline-capable (PWA) slides and remove dependence on
-third-party hosts during a live talk.
+Rationale: local, optimized assets keep slides fast and remove dependence on third-party hosts
+during a live talk.
 
 ### V. Simplicity & Minimal Dependencies
 
 - New runtime dependencies MUST be justified by a slide need that existing dependencies cannot
   meet; the justification MUST appear in the commit message or PR description.
-- Reusable UI belongs in `src/components/`, layouts in `src/layouts/`; components MUST NOT be
-  created for one-off content that Markdown can express.
+- A client-side UI framework (React, Vue, Svelte, etc.) MUST NOT be added unless that
+  justification shows plain HTML/CSS and small vanilla scripts cannot meet the need.
+- Layouts belong in `src/layouts/`, client scripts in `src/scripts/`; reusable components, if ever
+  needed, in `src/components/`. Components MUST NOT be created for one-off content that Markdown
+  can express.
 - Dependency upgrades MUST be followed by a successful build (Principle III).
 
 Rationale: this is a presentation, not an application. Every dependency is upgrade and security
@@ -73,21 +88,30 @@ burden with little audience-visible value.
 
 ## Technology & Deployment Constraints
 
-- Stack: Gatsby 5, React 18, `gatsby-transformer-remark`, `gatsby-remark-images`,
-  `gatsby-plugin-offline`, `highlight.js` for code highlighting.
+- Stack: Astro (static output, no SSR adapter), Markdown slides loaded through an Astro content
+  collection, built-in `astro:assets` image optimization, `astro:transitions` for slide
+  transitions, and vanilla JavaScript for navigation.
 - Runtime: Node.js >= 22 (per `package.json` `engines`).
 - Package manager: `yarn.lock` is the authoritative lockfile; dependency changes MUST update it
   and MUST NOT introduce a second lockfile.
-- Deployment: Netlify via `gatsby-adapter-netlify`; build command `gatsby build`, publish dir
-  `public/`. Generated output in `public/` MUST NOT be hand-edited.
-- Navigation MUST remain usable via keyboard arrows and touch swipe (`react-swipeable`).
+- Deployment: Netlify static hosting. Build command and publish directory (`dist/`) MUST be set in
+  the committed `netlify.toml`; response headers (CSP, Permissions-Policy, and other security
+  headers) MUST be set in the committed `public/_headers`. Generated output in `dist/` MUST NOT
+  be hand-edited or committed.
+- Security headers MUST NOT be loosened without a recorded rationale in the PR description.
+- The site MUST NOT register a service worker or other browser-side offline cache. The venue
+  fallback for unreliable networks is a local build (`yarn build && yarn serve`), documented in
+  `README.md`.
+- Navigation MUST remain usable via keyboard (Right Arrow / Enter / Space forward, Left Arrow
+  back) and touch swipe, bounded at the first and last slide.
 
 ## Development Workflow & Quality Gates
 
-1. Develop with `gatsby develop` (http://localhost:8000) and visually verify changed slides.
-2. JavaScript under `src/` MUST be Prettier-formatted; the husky pre-commit hook enforces this
-   and MUST NOT be bypassed (`--no-verify`) except to unblock an emergency revert.
-3. Before commit: run `gatsby build`; on cache-related failures run `gatsby clean` and rebuild.
+1. Develop with `yarn develop` (http://localhost:8000) and visually verify changed slides.
+2. Source under `src/` (JavaScript and `.astro`) MUST be Prettier-formatted; the husky pre-commit
+   hook enforces this and MUST NOT be bypassed (`--no-verify`) except to unblock an emergency
+   revert.
+3. Before commit: run `yarn build`; on cache-related failures run `yarn clean` and rebuild.
 4. Feature work planned via Spec Kit (`/speckit-specify` → `/speckit-plan` → `/speckit-tasks`)
    MUST pass `/speckit-analyze` with no CRITICAL findings before `/speckit-implement`.
 5. No automated test suite exists; verification is the green build plus manual slide review.
@@ -105,4 +129,4 @@ burden with little audience-visible value.
   (`/speckit-analyze` treats violations as CRITICAL); exceptions MUST be recorded with rationale
   in the relevant plan.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-26 | **Last Amended**: 2026-10-26
+**Version**: 2.0.0 | **Ratified**: 2026-10-26 | **Last Amended**: 2026-10-26

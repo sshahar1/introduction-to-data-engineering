@@ -1,0 +1,23 @@
+---
+import { getCollection, render } from 'astro:content';
+import Deck from '../layouts/Deck.astro';
+
+export async function getStaticPaths() {
+  const slides = (await getCollection('slides')).sort(
+    (a, b) => a.data.index - b.data.index
+  );
+  return slides.map((entry) => ({
+    params: { slide: String(entry.data.index) },
+    props: { entry, total: slides.length },
+  }));
+}
+
+const { entry, total } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Deck index={entry.data.index} total={total}>
+  <div class="slide-content">
+    <Content />
+  </div>
+</Deck>

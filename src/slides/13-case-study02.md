@@ -2,4 +2,4 @@
 title: "Case study diagram"
 ---
 # Case Study
-![Case study](Casestudy.png)
+![Case study](../resources/Casestudy.png)

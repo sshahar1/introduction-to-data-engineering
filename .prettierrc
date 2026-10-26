@@ -4,6 +4,7 @@
   "trailingComma": "es5",
   "bracketSpacing": true,
   "bracketSameLine": false,
-  "parser": "babel",
-  "semi": true
+  "semi": true,
+  "plugins": ["prettier-plugin-astro"],
+  "overrides": [{ "files": "*.astro", "options": { "parser": "astro" } }]
 }

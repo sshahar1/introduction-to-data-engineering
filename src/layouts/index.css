@@ -236,6 +236,13 @@ img {
     justify-content: space-evenly;
 }
 
+/* Optimised slide images carry width/height attributes; size them by their
+   natural aspect ratio under the max-height cap, like plain <img> tags */
+.slide-content img {
+    width: auto;
+    height: auto;
+}
+
 header a,
 time {
     text-decoration: none;
