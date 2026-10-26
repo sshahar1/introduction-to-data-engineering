@@ -1,8 +1,8 @@
 # Development View: System
 
 **Sub-System**: System
-**ADRs Referenced**: ADR-001, ADR-002, ADR-003, ADR-004, ADR-005, ADR-006
-**Generated**: 2026-10-26
+**ADRs Referenced**: ADR-002, ADR-003, ADR-004, ADR-007, ADR-008
+**Generated**: 2026-10-26 (regenerated after the Gatsby → Astro migration)
 **Dependencies**: Functional View
 
 ---
@@ -15,95 +15,100 @@
 
 ```text
 introduction-to-data-engineering/
-├── gatsby-config.js        # Plugins, content source, site metadata
-├── gatsby-node.js          # Slide Sequencer + Page Generator (build hooks)
+├── astro.config.mjs        # URLs (/N, no trailing slash), image + Markdown options, dev redirect
+├── netlify.toml            # Build command, publish dir, NODE_VERSION
 ├── package.json / yarn.lock
-├── .husky/pre-commit       # Runs Prettier on src/**/*.js
-├── .prettierrc
+├── .tool-versions          # nodejs 22.23.4, yarn 1.22.22
+├── .husky/pre-commit       # Runs Prettier on src/**/*.{js,astro} and *.mjs
+├── .prettierrc             # + prettier-plugin-astro
+├── public/                 # Copied to dist/ unchanged
+│   ├── _headers            # CSP + security headers, cache rules
+│   ├── _redirects          # / -> /1 (302, forced)
+│   └── sw.js               # Legacy Worker Retirement (kill switch)
 └── src/
-    ├── slides/             # Slide Content Store: NN-topic[NN].md (~45 files)
-    ├── resources/          # Images (logo, diagrams, photos)
-    ├── templates/slide.js  # Renders one slide's HTML
-    ├── layouts/index.js    # Presentation Shell + Navigation Controller
-    ├── layouts/index.css   # Deck styling
-    ├── components/transition.js  # Transition Animator
-    └── pages/              # index.js (redirect / → /1), 404.js
+    ├── content.config.js   # Slide Sequencer + Content Renderer (custom loader)
+    ├── site.js             # Site Metadata
+    ├── slides/             # Slide Content Store: NN-topic[suffix].md (40 files)
+    ├── resources/          # Images, logo, self-hosted fonts
+    ├── layouts/Deck.astro  # Presentation Shell + Transition Animator wiring
+    ├── layouts/index.css   # Deck styling (unchanged from Gatsby, plus image sizing rule)
+    ├── scripts/navigation.js  # Navigation Controller
+    └── pages/              # [slide].astro (Page Generator), 404.astro
 ```
 
 ### 3.5.2 Technology Stack Mapping
 
 | Functional Role | Technology Choice | Version/Variant | ADR Reference |
 |-----------------|-------------------|-----------------|---------------|
-| Static site generator / App shell | Gatsby | ^5.16.1 | ADR-001 |
-| UI library | React / React DOM | ^18.1.0 | ADR-001 |
-| Slide Content Store source | gatsby-source-filesystem | ^5.12.1 | ADR-002 |
-| Content Transformer | gatsby-transformer-remark | 6.16.0 (exact pin) | ADR-002, ADR-006 |
-| Image Processor | gatsby-remark-images, gatsby-plugin-sharp, gatsby-transformer-sharp | ^7.12 / ^5.16 | ADR-002 |
-| Linked file copy | gatsby-remark-copy-linked-files | ^6.12.0 | ADR-002 |
-| Presentation Shell layout | gatsby-plugin-layout, react-helmet | ^4.12 / ^6.1 | ADR-003 |
-| Navigation Controller (touch) | react-swipeable | ^6.1.2 | ADR-003 |
-| Transition Animator | react-transition-group | ^4.3.0 | ADR-003 |
-| Offline Cache | gatsby-plugin-offline | ^6.16.0 | ADR-005 |
-| Hosting adapter | gatsby-adapter-netlify | ^1.4.0 | ADR-004 |
-| Security pins | tar-fs, cookie, @expo/devcert | ^3.1.1 / ^0.7.2 / ^1.2.1 | ADR-006 |
-| Formatting | Prettier + Husky | ^3.3.3 / ^9.1.6 | ADR-006 |
-| Linting (unconfigured) | ESLint 9, @typescript-eslint 4, babel-eslint 10 | no config file | ADR-006 |
-| Runtime | Node.js | >= 22 | ADR-006 |
+| Static site generator | Astro, static output, no adapter | ^7.4.2 | ADR-007 |
+| Slide Content Store + Slide Sequencer | Astro content collection with custom loader (`src/content.config.js`) | — | ADR-002, ADR-007 |
+| Content Renderer | Astro Markdown pipeline (`renderMarkdown`), smartypants off, syntax highlighting off | built in | ADR-007 |
+| Image Processor | `astro:assets` (sharp), constrained layout, breakpoints ≤ 1920px | built in | ADR-007 |
+| Page Generator | `src/pages/[slide].astro` (`getStaticPaths`), `404.astro`, `public/_redirects`, `public/_headers` | — | ADR-002, ADR-004 |
+| Presentation Shell | `src/layouts/Deck.astro` | — | ADR-003 |
+| Navigation Controller | Plain JavaScript module (`src/scripts/navigation.js`) | — | ADR-003 |
+| Transition Animator | `astro:transitions` (`ClientRouter`, `fade` 0.2s) | built in | ADR-003, ADR-007 |
+| Legacy Worker Retirement | Static `public/sw.js` | — | ADR-008 |
+| Formatting | Prettier + prettier-plugin-astro + Husky | ^3.3.3 / ^1.1.2 / ^9.1.6 | ADR-007 |
+| Linting (unconfigured) | ESLint 9, @typescript-eslint 4, babel-eslint 10 | no config file | ADR-007 |
+| Runtime | Node.js | 22.23.4 (pinned; Astro 7.4 minimum) | ADR-004, ADR-007 |
 
 ### 3.5.3 Technology Architecture
 
 ```mermaid
 graph LR
-    subgraph BuildTime["Build time (Node.js 22)"]
-        Gatsby["Gatsby 5"]
-        Remark["transformer-remark"]
-        Sharp["sharp image plugins"]
-        Node["gatsby-node.js hooks"]
+    subgraph BuildTime["Build time (Node.js 22.23.4)"]
+        Astro["Astro 7"]
+        Loader["content.config.js loader"]
+        MD["Markdown pipeline"]
+        Sharp["astro:assets (sharp)"]
+        Pages["[slide].astro, 404.astro"]
     end
     subgraph Browser["Browser"]
-        React["React 18"]
-        Layout["layouts/index.js"]
-        Swipe["react-swipeable"]
-        RTG["react-transition-group"]
-        SW["service worker (offline)"]
+        Deck["Deck.astro output"]
+        Router["ClientRouter (fade)"]
+        Nav["navigation.js"]
+        Kill["sw.js (returning browsers)"]
     end
-    Gatsby --> Remark --> Node
-    Gatsby --> Sharp
-    Node -->|"emits pages"| React
-    React --> Layout
-    Layout --> Swipe
-    Layout --> RTG
-    Gatsby -->|"generates"| SW
+    Astro --> Loader --> MD
+    MD --> Sharp
+    Loader --> Pages
+    Pages -->|"emits static HTML"| Deck
+    Deck --> Router
+    Deck --> Nav
+    Nav -->|"navigate()"| Router
+    Astro -->|"copies public/"| Kill
 ```
 
 ### 3.5.4 Module Dependencies
 
 | Module | Depends On | Notes |
 |--------|------------|-------|
-| `gatsby-node.js` | Remark nodes (GraphQL), `src/templates/slide.js` | Sorts, splits on `<hr>`, creates `Slide` type and pages |
-| `src/templates/slide.js` | `Slide` GraphQL type | Injects HTML via `dangerouslySetInnerHTML` |
-| `src/layouts/index.js` | `site.siteMetadata`, `allSlide` count, transition, swipeable, logo | Global keydown listener |
-| `src/components/transition.js` | react-transition-group | Keyed on `location.pathname` |
-| `src/pages/index.js` | Gatsby `navigate` | Redirects to `/1` |
+| `src/content.config.js` | `src/slides/*.md`, Astro loader context (`renderMarkdown`, `store`) | Sorts, splits source at breaks, registers image imports (`assetImports`), live reload in dev |
+| `src/pages/[slide].astro` | `slides` collection, `Deck.astro` | One page per entry; passes `index` and `total` |
+| `src/layouts/Deck.astro` | `site.js`, `logo.png`, `index.css`, `astro:transitions`, `navigation.js` | Title, footer, `#slide` data attributes, transitions |
+| `src/scripts/navigation.js` | `astro:transitions/client` (`navigate`) | Reads index/total from the DOM at event time |
+| `src/pages/404.astro` | `Deck.astro` | No index → no footer number, navigation inactive |
 
 ### 3.5.5 Build & CI/CD
 
 | Stage | Where | Command / Mechanism | Gate |
 |-------|-------|---------------------|------|
-| Format | Local, pre-commit | Husky → `npm run format` (Prettier on `src/**/*.js`) | Blocks commit on failure |
-| Local build check | Local | `gatsby build` (Constitution §III) | Manual, required before commit |
-| Preview | Local | `gatsby develop` / `gatsby serve` | Manual visual review |
+| Format | Local, pre-commit | Husky → `npm run format` (Prettier on `src/**/*.{js,astro}`, `*.mjs`) | Blocks commit on failure |
+| Local build check | Local | `yarn build` (Constitution §III) | Required before commit |
+| Preview | Local | `yarn develop` (live reload) / `yarn serve` (production build) | Manual visual review |
+| Deploy preview | Netlify, on PR | `netlify.toml`: `yarn build`, publish `dist/`, `NODE_VERSION` | Required green before merge (Constitution §III) |
 | CI | None in repository | — | — |
-| Build + deploy | Netlify, on push to `master` | `gatsby build`, settings in Netlify UI | Deploy fails if build fails |
+| Build + deploy | Netlify, on merge to `master` | Same committed config | Deploy fails if build fails |
 
 ### 3.5.6 Development Standards
 
 - Slide naming and Markdown-first rules: Constitution §I, §II
-- Green build before commit: Constitution §III
-- Local optimised assets: Constitution §IV
-- Dependency justification: Constitution §V
-- `yarn.lock` is the authoritative lockfile (Constitution, Technology section); `CLAUDE.md`
-  uses the same yarn commands (aligned 2026-10-26)
+- Green build before commit, green preview before merge: Constitution §III
+- Local optimised assets in `src/resources/`, widths ≤ 1920px: Constitution §IV
+- Dependency justification, no client UI framework: Constitution §V
+- `yarn.lock` is the only lockfile; `CLAUDE.md` describes the same commands (updated
+  2026-10-26)
 
 ---
 
@@ -111,27 +116,29 @@ graph LR
 
 ### Security Considerations
 
-- Supply chain: transitive vulnerabilities fixed by promoting `tar-fs`, `cookie`,
-  `@expo/devcert` to direct dependencies; review on every upgrade (ADR-006).
+- Supply chain reduced to one runtime dependency; `yarn audit` reports 0 vulnerabilities
+  (2026-10-26). The Gatsby-era transitive security pins are gone (ADR-007).
 - No secrets in repository or build; nothing to rotate.
 
-_Source ADRs: ADR-006_
+_Source ADRs: ADR-007_
 
 ### Performance Considerations
 
-- Build cost dominated by sharp image processing; acceptable for current asset count.
+- Builds take about 2 s locally including image optimisation (41 pages); dev reloads slide
+  edits live (ADR-007).
 
-_Source ADRs: ADR-003_
+_Source ADRs: ADR-007_
 
 ### Evolution Considerations
 
-- Upgrade blockers: deprecated `keyCode` (ADR-003); exact remark pin (ADR-006).
-  highlight.js was removed on 2026-10-26.
-- Lint toolchain is installed but non-functional (no `eslint.config.*`, plugin majors mismatch
-  ESLint 9) — either configure or remove (ADR-006).
-- Build config not in repo; committing `netlify.toml` would make builds reproducible (ADR-004).
+- The custom loader depends on Astro's content-loader API; regressions are caught by the slide
+  text comparison and the split test (ADR-002, ADR-007).
+- Astro majors raise the Node minimum; the pin lives in `.tool-versions`, `netlify.toml` and
+  `package.json` (ADR-007).
+- The lint toolchain is still installed but non-functional; configure or remove it (ADR-007).
+- `public/sw.js` stays until a new ADR retires it (ADR-008).
 
-_Source ADRs: ADR-003, ADR-004, ADR-006_
+_Source ADRs: ADR-002, ADR-007, ADR-008_
 
 ---
 
@@ -148,9 +155,8 @@ _Source ADRs: ADR-003, ADR-004, ADR-006_
 
 | ADR | Decision | Impact on Development View |
 |-----|----------|----------------------------|
-| ADR-001 | Gatsby static site | Defines toolchain and repo layout |
-| ADR-002 | Markdown content model | `src/slides/` + `gatsby-node.js` logic |
-| ADR-003 | In-house runtime | `layouts/`, `components/`, `templates/` modules |
-| ADR-004 | Netlify, no repo CI | Build pipeline lives on platform |
-| ADR-005 | Offline PWA | `gatsby-plugin-offline` |
-| ADR-006 | Incremental upgrades | Pins, lint mismatch, Node 22 engine |
+| ADR-002 | Markdown content model | `src/slides/` + loader split rules |
+| ADR-003 | In-house runtime | `Deck.astro`, `navigation.js`, `ClientRouter` |
+| ADR-004 | Netlify with committed config | `netlify.toml`, `public/_headers`, `public/_redirects`; preview gate |
+| ADR-007 | Astro static site | Toolchain, repo layout, Node pin, Prettier plugin |
+| ADR-008 | No offline worker | `public/sw.js` kill switch only |

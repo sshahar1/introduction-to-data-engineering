@@ -10,25 +10,22 @@
     "clarify_completed": true,
     "clarify_completed_at": "2026-10-26T15:04:17Z",
     "adrs_approved_count": 8,
-    "implement_started": false,
-    "implement_started_at": null
+    "implement_started": true,
+    "implement_started_at": "2026-10-26T15:06:26Z"
   },
   "version": "1.1.0",
   "created_at": "2026-10-26T10:01:51Z",
-  "updated_at": "2026-10-26T15:04:17Z",
-  "phase": "clarified",
+  "updated_at": "2026-10-26T15:10:47Z",
+  "phase": "completed",
   "views_mode": "core",
   "subsystems": [
     {
       "id": "system",
       "name": "System",
       "adrs": [
-        "ADR-001",
         "ADR-002",
         "ADR-003",
         "ADR-004",
-        "ADR-005",
-        "ADR-006",
         "ADR-007",
         "ADR-008"
       ],
