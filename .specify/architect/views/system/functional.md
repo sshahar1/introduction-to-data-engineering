@@ -17,7 +17,7 @@
 The system is a single deployable static site (ADR-007) with two lifecycle stages: a
 **build-time pipeline** that turns Markdown into slide pages, and a **browser runtime** that
 presents them. A separate **legacy-worker retirement** element exists only to move browsers
-off the previous Gatsby deployment (ADR-008).
+off the previous deployment's offline worker (ADR-008).
 
 ### 3.2.1 Functional Elements
 
@@ -31,7 +31,7 @@ off the previous Gatsby deployment (ADR-008).
 | Presentation Shell | Runtime | Wraps every slide: document title, footer (logo, deck title, slide number); exposes current index and total to the page (ADR-003) | Layout around current slide | Page Generator output |
 | Navigation Controller | Runtime | Maps keys (Right/Enter/Space, Left) and swipes to next/previous slide; bounded at first/last; inactive on the NOT FOUND page (ADR-003) | Client-side route change to `/N±1` | Presentation Shell |
 | Transition Animator | Runtime | Cross-fades the slide area for 200 ms on route change; footer swaps without animation (ADR-003) | Animated slide container | Navigation Controller |
-| Legacy Worker Retirement | Runtime (returning browsers only) | Clears the old Gatsby offline caches, unregisters the old worker, reloads open tabs; nothing registers a worker anymore (ADR-008) | Worker script at the legacy path | Page Generator output (static file) |
+| Legacy Worker Retirement | Runtime (returning browsers only) | Clears the previous deployment's offline caches, unregisters its worker, reloads open tabs; nothing registers a worker anymore (ADR-008) | Worker script at the legacy path | Page Generator output (static file) |
 
 ### 3.2.2 Element Interactions
 

@@ -1,25 +1,16 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 2.0.0 (MAJOR: §III and §IV redefined; the Technology & Deployment
-  Constraints stack is replaced. Driven by feature 001-gatsby-to-astro-migration, analysis D1.)
-- Modified principles:
-  - I. Content-First Markdown Slides — wording only: the split separator is now described as a
-    thematic break, so a setext heading `---` is not a separator
-  - III. Green Production Build — `gatsby build` → `yarn build` (tool-agnostic); Netlify deploy
-    preview added as the pre-merge gate
-  - IV. Local, Optimized Assets — Gatsby plugin and config references removed; the 1920px cap is
-    restated as an output rule; PWA rationale removed
-  - V. Simplicity & Minimal Dependencies — adds: no client-side UI framework without §V
-    justification
+- Version change: 2.0.0 → 2.0.1 (PATCH: wording only; no principle added, removed or redefined.
+  Driven by /architect-analyze finding F2 after feature 001-gatsby-to-astro-migration.)
+- Modified principles: none
+- Modified sections:
+  - Technology & Deployment Constraints: the Node.js runtime line now states the actual minimum
+    (>= 22.23.4, required by Astro 7.4) and where it is pinned, instead of ">= 22"
 - Added sections: none
 - Removed sections: none
-- Technology & Deployment Constraints: the stack becomes Astro (static output) with vanilla-JS
-  navigation; there is now a rule that no service worker is registered, with a local-build venue
-  fallback; Netlify config is committed (`netlify.toml`, `public/_headers`); the stale
-  `highlight.js` entry is removed
-- Development Workflow: dev and clean commands generalised to `yarn` scripts
-- Deferred TODOs: none. Open decision outside this amendment: analysis finding D2 (3 images in
-  `src/slides/` vs §IV location rule) is unchanged here and still to be decided.
+- Deferred TODOs: none
+- Previous amendment: 1.0.0 → 2.0.0 (MAJOR) on 2026-10-26 for the Gatsby → Astro migration
+  (analysis D1); finding D2 was resolved by moving the slide images to src/resources/.
 -->
 
 # Introduction to Data Engineering Constitution
@@ -91,7 +82,8 @@ burden with little audience-visible value.
 - Stack: Astro (static output, no SSR adapter), Markdown slides loaded through an Astro content
   collection, built-in `astro:assets` image optimization, `astro:transitions` for slide
   transitions, and vanilla JavaScript for navigation.
-- Runtime: Node.js >= 22 (per `package.json` `engines`).
+- Runtime: Node.js >= 22.23.4 (the Astro 7.4 minimum), pinned in `.tool-versions`,
+  `netlify.toml` (`NODE_VERSION`) and `package.json` `engines`.
 - Package manager: `yarn.lock` is the authoritative lockfile; dependency changes MUST update it
   and MUST NOT introduce a second lockfile.
 - Deployment: Netlify static hosting. Build command and publish directory (`dist/`) MUST be set in
@@ -129,4 +121,4 @@ burden with little audience-visible value.
   (`/speckit-analyze` treats violations as CRITICAL); exceptions MUST be recorded with rationale
   in the relevant plan.
 
-**Version**: 2.0.0 | **Ratified**: 2026-10-26 | **Last Amended**: 2026-10-26
+**Version**: 2.0.1 | **Ratified**: 2026-10-26 | **Last Amended**: 2026-10-26
