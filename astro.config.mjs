@@ -4,6 +4,8 @@ export default defineConfig({
   // Slides live at /1, /2, ... with no trailing slash (dist/1.html, ...)
   trailingSlash: 'never',
   build: { format: 'file' },
+  // Dev-server parity; production uses the forced rule in public/_redirects
+  redirects: { '/': '/1' },
   image: {
     layout: 'constrained',
     // Cap generated widths at 1920px (constitution §IV)
