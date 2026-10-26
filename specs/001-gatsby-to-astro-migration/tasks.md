@@ -178,7 +178,7 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
   Confirm no file under `src/` calls `navigator.serviceWorker.register` (FR-019, FR-020).
 - [x] T028 [P] [US5] Add a "Presenting without network" section to `README.md`. It says to run `yarn install && yarn build` while online, and `yarn serve` at the venue, then open `http://localhost:8000/1` (FR-020).
 - [ ] T029 [US5] On the deploy preview, run the quickstart.md V5 header `curl` and compare it with the T001 baseline. Every header must be present and at least as strict. Then run quickstart.md V6 (`yarn build && yarn serve` with networking off) (SC-005).
-- [ ] T041 [US5] Pre-merge local test of worker retirement, on one origin, `http://localhost:8000` (FR-019, SC-006):
+- [x] T041 [US5] Pre-merge local test of worker retirement, on one origin, `http://localhost:8000` (FR-019, SC-006):
   1. `git worktree add ../ide-gatsby master`, then in that worktree run `yarn install && yarn build && yarn gatsby serve -p 8000`.
   2. In a fresh browser profile, open `http://localhost:8000/1`, navigate a few slides, and confirm DevTools → Application shows the Gatsby service worker active and Cache Storage filled.
   3. Stop the server. On the feature branch, run `yarn build && yarn serve` (same port).

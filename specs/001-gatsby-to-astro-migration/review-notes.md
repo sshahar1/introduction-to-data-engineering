@@ -42,6 +42,18 @@ Production currently answers `/12` with **301 → `/12/`**, so links shared from
 
 **A5 (accepted)**: overall rendering judged slightly better than production; no specific slide flagged. The likely source is the optimised responsive images (A1) and the simpler page markup.
 
+## Worker retirement, local (T041)
+
+Automated with headless Brave over the DevTools protocol, both builds on one origin (`http://localhost:8000`), fresh profile, 2026-10-26:
+
+| Step | Registrations | Controlled | Caches | Page |
+|---|---|---|---|---|
+| Gatsby `master` build, after visiting `/1/` and `/5/` | 1 | yes | 2 | Gatsby |
+| Astro build, first load of `/1` | **0** | no | **0** | Astro (40 slides) |
+| *Control: Astro build without `sw.js`, loads 1–3* | 1 | yes | 2 | Astro |
+
+**Result**: PASS after one load. The control shows that without the kill switch the old worker stays registered and keeps its caches, so `public/sw.js` is what retires it. SC-006 still gets a production re-check after merge (T038).
+
 ## Navigation check (T018)
 
 Keys and swipes tried on the local build (2026-10-26); maintainer confirmed with no issues reported.
