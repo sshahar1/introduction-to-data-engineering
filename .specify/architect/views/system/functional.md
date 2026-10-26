@@ -30,7 +30,6 @@ presents them.
 | Presentation Shell | Runtime | Wraps every slide: title, footer (logo, slide number), branding (ADR-003) | Layout around current slide | Page Generator output |
 | Navigation Controller | Runtime | Maps keyboard (←, →, Enter, Space) and swipe gestures to previous/next slide routes; bounds at first/last (ADR-003) | Route change to `/N±1` | Presentation Shell, slide count |
 | Transition Animator | Runtime | Fades between slides on route change (200 ms) (ADR-003) | Animated slide container | Navigation Controller |
-| Code Highlighter | Runtime | Applies syntax highlighting to code blocks after render (ADR-003) | Styled code blocks | Presentation Shell |
 | Offline Cache | Runtime | Service worker precaches pages/assets so the deck runs without network (ADR-005) | Cached responses | Page Generator output |
 
 ### 3.2.2 Element Interactions
@@ -49,7 +48,6 @@ graph TD
         Shell["Presentation Shell"]
         Nav["Navigation Controller"]
         Anim["Transition Animator"]
-        Hl["Code Highlighter"]
         Cache["Offline Cache"]
     end
 
@@ -64,13 +62,12 @@ graph TD
     Shell -->|"Key/swipe events"| Nav
     Nav -->|"Route change"| Anim
     Anim -->|"Renders next slide"| Shell
-    Shell -->|"Rendered code blocks"| Hl
 
     classDef buildNode fill:#66c2a5,stroke:#333,stroke-width:2px,color:#fff
     classDef runtimeNode fill:#4a9eff,stroke:#333,stroke-width:2px,color:#fff
 
     class Content,Transformer,Images,Sequencer,Pages buildNode
-    class Shell,Nav,Anim,Hl,Cache runtimeNode
+    class Shell,Nav,Anim,Cache runtimeNode
 ```
 
 ### 3.2.3 Functional Boundaries
@@ -79,7 +76,6 @@ graph TD
 
 - Turns ordered Markdown files into numbered, deep-linkable slide pages
 - Presents slides with keyboard and touch navigation and fade transitions
-- Highlights code samples in slides
 - Keeps working offline after first visit
 
 **What this system does NOT do:**
@@ -104,9 +100,7 @@ _Source ADRs: ADR-001, ADR-003_
 
 ### Performance Considerations
 
-- All transformation cost sits at build time; runtime work is route change + fade + highlight.
-- Code Highlighter re-runs on every render (no memoisation) — negligible at current slide
-  sizes, but the one runtime hot path worth fixing (ADR-003).
+- All transformation cost sits at build time; runtime work is route change + fade.
 - Offline Cache makes repeat navigation local after first load (ADR-005).
 
 _Source ADRs: ADR-003, ADR-005_
@@ -115,8 +109,7 @@ _Source ADRs: ADR-003, ADR-005_
 
 - Slide Sequencer splits on the literal rendered separator string; a change in Markdown
   rendering would silently break slide boundaries (ADR-002).
-- Navigation Controller uses a deprecated keyboard API and Code Highlighter relies on an API
-  removed in the highlighter's next major version — both block upgrades (ADR-003, ADR-006).
+- Navigation Controller uses a deprecated keyboard API (ADR-003).
 - Extension point for new slides is purely additive: add a correctly named file (ADR-002).
 
 _Source ADRs: ADR-002, ADR-003, ADR-006_
@@ -139,5 +132,5 @@ _Source ADRs: ADR-002, ADR-003, ADR-006_
 |-----|----------|---------------------------|
 | ADR-001 | Static-site-generated deck | Splits system into build pipeline + browser runtime; no back end |
 | ADR-002 | Markdown split on separator, path-ordered | Defines Content Store, Slide Sequencer, Page Generator |
-| ADR-003 | In-house presentation runtime | Defines Shell, Navigation, Transition, Highlighter elements |
+| ADR-003 | In-house presentation runtime | Defines Shell, Navigation, Transition elements |
 | ADR-005 | Offline PWA | Adds Offline Cache element |

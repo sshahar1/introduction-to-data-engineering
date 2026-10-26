@@ -6,7 +6,7 @@
 |----|------------|----------|--------|------|-------|
 | ADR-001 | System | Slide Deck Built as a Static-Site-Generated Web App (Gatsby) | Accepted | 2026-10-26 | Legacy/Inferred |
 | ADR-002 | System | Slide Content Model — Markdown Files Split on `<hr>`, Ordered by File Path | Accepted | 2026-10-26 | Legacy/Inferred |
-| ADR-003 | System | In-House Presentation Runtime (Navigation, Transitions, Highlighting) | Accepted | 2026-10-26 | Legacy/Inferred |
+| ADR-003 | System | In-House Presentation Runtime (Navigation, Transitions) | Accepted | 2026-10-26 | Legacy/Inferred |
 | ADR-004 | System | Netlify Hosting with Platform-Side Builds, No Repository CI | Accepted | 2026-10-26 | Legacy/Inferred |
 | ADR-005 | System | Offline-Capable PWA via Service Worker | Accepted | 2026-10-26 | Legacy/Inferred |
 | ADR-006 | System | Evolution Strategy — Incremental Upgrades of an Aging Gatsby Starter | Accepted | 2026-10-26 | Legacy/Inferred |
@@ -149,7 +149,7 @@ HIGH - Directly readable in `gatsby-node.js`; URL trade-off confirmed by owner.
 
 ---
 
-## ADR-003: In-House Presentation Runtime (Navigation, Transitions, Highlighting)
+## ADR-003: In-House Presentation Runtime (Navigation, Transitions)
 
 ### Status
 Accepted (Discovered from codebase; approved 2026-10-26)
@@ -172,8 +172,8 @@ transitions, and code highlighting.
   deprecated `keyCode` (Enter/Space/→ next, ← previous) calling `navigate('/N')`
 - `react-swipeable` wrapper for swipe left/right
 - `src/components/transition.js`: `react-transition-group` 200ms opacity fade keyed on path
-- `highlight.js` ^10.7.3 `hljs.initHighlighting()` run client-side in `useEffect`, resetting
-  `initHighlighting.called` on cleanup
+- (Removed 2026-10-26) `highlight.js` ^10.7.3 `hljs.initHighlighting()` ran client-side in
+  `useEffect`; no slide contained a code block
 - `src/templates/slide.js`: slide HTML injected via `dangerouslySetInnerHTML`
 - Footer with Tikal logo, title, slide index; Quicksand font (self-hosted since 2026-10-26, see ADR-005)
 
@@ -188,8 +188,7 @@ rather than a slide framework: each slide is a route, navigation is a client-sid
 - Every slide is deep-linkable and works with browser history
 
 #### Negative (Potential)
-- `KeyboardEvent.keyCode` is deprecated; `hljs.initHighlighting()` was removed in
-  highlight.js v11, which blocks upgrading (see ADR-006)
+- `KeyboardEvent.keyCode` is deprecated
 - No speaker notes, overview, presenter view, or print/PDF mode
 - No ARIA/screen-reader support; keyboard nav only for arrows/Enter/Space
 
@@ -198,7 +197,6 @@ rather than a slide framework: each slide is a route, navigation is a client-sid
   Markdown built at compile time; accepting external content would open XSS. Mitigation
   (2026-10-26): same-origin Content-Security-Policy in `gatsby-config.js` blocks third-party
   scripts, plugins and framing; `'unsafe-inline'` remains because of Gatsby's inline scripts
-- Performance: highlighting runs on every render (effect has no dependency array)
 
 ### Common Alternatives
 #### Embed a slide engine (reveal.js / spectacle) inside Gatsby
@@ -208,6 +206,11 @@ rather than a slide framework: each slide is a route, navigation is a client-sid
 #### Build-time highlighting (`gatsby-remark-prismjs`)
 **Description**: Highlight code during Markdown transform.
 **Trade-offs**: No client JS for highlighting, faster render; different theme ecosystem.
+
+### Amendments
+- 2026-10-26: Client-side code highlighting (`highlight.js`) removed. No slide contained a
+  code block, and the full library was ~90% of the compressed app bundle (308 KB → 33 KB).
+  If code samples are added later, prefer build-time highlighting (see Common Alternatives).
 
 ### Confidence Level
 HIGH - All behaviour is visible in three small files.
@@ -371,7 +374,8 @@ and has been kept alive through dependency upgrades rather than rewrites.
 - Commits titled "upgrade" (2025-11-07)
 - Transitive security pins added as direct deps: `tar-fs`, `cookie`, `@expo/devcert`
 - `gatsby-transformer-remark` pinned exactly to `6.16.0` (others use `^`)
-- `highlight.js` held at ^10.7.3 (v11 removes `initHighlighting`, see ADR-003)
+- `highlight.js` was held at ^10.7.3 (v11 removes `initHighlighting`); removed entirely on
+  2026-10-26 (see ADR-003)
 - Lint toolchain mismatch: `eslint` ^9 with `@typescript-eslint/*` ^4, `babel-eslint` ^10
   (deprecated), `typescript` ^4; no ESLint config file
 - `yarn.lock` present while `CLAUDE.md` documents `npm run` commands (resolved

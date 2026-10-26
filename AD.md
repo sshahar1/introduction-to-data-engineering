@@ -163,7 +163,6 @@ presents them.
 | Presentation Shell | Runtime | Wraps every slide: title, footer (logo, slide number), branding (ADR-003) | Layout around current slide | Page Generator output |
 | Navigation Controller | Runtime | Maps keyboard (←, →, Enter, Space) and swipe gestures to previous/next slide routes; bounds at first/last (ADR-003) | Route change to `/N±1` | Presentation Shell, slide count |
 | Transition Animator | Runtime | Fades between slides on route change (200 ms) (ADR-003) | Animated slide container | Navigation Controller |
-| Code Highlighter | Runtime | Applies syntax highlighting to code blocks after render (ADR-003) | Styled code blocks | Presentation Shell |
 | Offline Cache | Runtime | Service worker precaches pages/assets so the deck runs without network (ADR-005) | Cached responses | Page Generator output |
 
 #### 3.2.2 Element Interactions
@@ -182,7 +181,6 @@ graph TD
         Shell["Presentation Shell"]
         Nav["Navigation Controller"]
         Anim["Transition Animator"]
-        Hl["Code Highlighter"]
         Cache["Offline Cache"]
     end
 
@@ -197,13 +195,12 @@ graph TD
     Shell -->|"Key/swipe events"| Nav
     Nav -->|"Route change"| Anim
     Anim -->|"Renders next slide"| Shell
-    Shell -->|"Rendered code blocks"| Hl
 
     classDef buildNode fill:#66c2a5,stroke:#333,stroke-width:2px,color:#fff
     classDef runtimeNode fill:#4a9eff,stroke:#333,stroke-width:2px,color:#fff
 
     class Content,Transformer,Images,Sequencer,Pages buildNode
-    class Shell,Nav,Anim,Hl,Cache runtimeNode
+    class Shell,Nav,Anim,Cache runtimeNode
 ```
 
 #### 3.2.3 Functional Boundaries
@@ -212,7 +209,6 @@ graph TD
 
 - Turns ordered Markdown files into numbered, deep-linkable slide pages
 - Presents slides with keyboard and touch navigation and fade transitions
-- Highlights code samples in slides
 - Keeps working offline after first visit
 
 **What this system does NOT do:**
@@ -237,9 +233,7 @@ _Source ADRs: ADR-001, ADR-003_
 
 ##### Performance Considerations
 
-- All transformation cost sits at build time; runtime work is route change + fade + highlight.
-- Code Highlighter re-runs on every render (no memoisation) — negligible at current slide
-  sizes, but the one runtime hot path worth fixing (ADR-003).
+- All transformation cost sits at build time; runtime work is route change + fade.
 - Offline Cache makes repeat navigation local after first load (ADR-005).
 
 _Source ADRs: ADR-003, ADR-005_
@@ -248,8 +242,7 @@ _Source ADRs: ADR-003, ADR-005_
 
 - Slide Sequencer splits on the literal rendered separator string; a change in Markdown
   rendering would silently break slide boundaries (ADR-002).
-- Navigation Controller uses a deprecated keyboard API and Code Highlighter relies on an API
-  removed in the highlighter's next major version — both block upgrades (ADR-003, ADR-006).
+- Navigation Controller uses a deprecated keyboard API (ADR-003).
 - Extension point for new slides is purely additive: add a correctly named file (ADR-002).
 
 _Source ADRs: ADR-002, ADR-003, ADR-006_
@@ -382,7 +375,7 @@ introduction-to-data-engineering/
     ├── slides/             # Slide Content Store: NN-topic[NN].md (~45 files)
     ├── resources/          # Images (logo, diagrams, photos)
     ├── templates/slide.js  # Renders one slide's HTML
-    ├── layouts/index.js    # Presentation Shell + Navigation Controller + Code Highlighter
+    ├── layouts/index.js    # Presentation Shell + Navigation Controller
     ├── layouts/index.css   # Deck styling
     ├── components/transition.js  # Transition Animator
     └── pages/              # index.js (redirect / → /1), 404.js
@@ -401,7 +394,6 @@ introduction-to-data-engineering/
 | Presentation Shell layout | gatsby-plugin-layout, react-helmet | ^4.12 / ^6.1 | ADR-003 |
 | Navigation Controller (touch) | react-swipeable | ^6.1.2 | ADR-003 |
 | Transition Animator | react-transition-group | ^4.3.0 | ADR-003 |
-| Code Highlighter | highlight.js (darcula theme) | ^10.7.3 (held below v11) | ADR-003, ADR-006 |
 | Offline Cache | gatsby-plugin-offline | ^6.16.0 | ADR-005 |
 | Hosting adapter | gatsby-adapter-netlify | ^1.4.0 | ADR-004 |
 | Security pins | tar-fs, cookie, @expo/devcert | ^3.1.1 / ^0.7.2 / ^1.2.1 | ADR-006 |
@@ -424,7 +416,6 @@ graph LR
         Layout["layouts/index.js"]
         Swipe["react-swipeable"]
         RTG["react-transition-group"]
-        HLJS["highlight.js 10"]
         SW["service worker (offline)"]
     end
     Gatsby --> Remark --> Node
@@ -433,7 +424,6 @@ graph LR
     React --> Layout
     Layout --> Swipe
     Layout --> RTG
-    Layout --> HLJS
     Gatsby -->|"generates"| SW
 ```
 
@@ -443,7 +433,7 @@ graph LR
 |--------|------------|-------|
 | `gatsby-node.js` | Remark nodes (GraphQL), `src/templates/slide.js` | Sorts, splits on `<hr>`, creates `Slide` type and pages |
 | `src/templates/slide.js` | `Slide` GraphQL type | Injects HTML via `dangerouslySetInnerHTML` |
-| `src/layouts/index.js` | `site.siteMetadata`, `allSlide` count, transition, highlight.js, swipeable, logo | Global keydown listener |
+| `src/layouts/index.js` | `site.siteMetadata`, `allSlide` count, transition, swipeable, logo | Global keydown listener |
 | `src/components/transition.js` | react-transition-group | Keyed on `location.pathname` |
 | `src/pages/index.js` | Gatsby `navigate` | Redirects to `/1` |
 
@@ -481,14 +471,13 @@ _Source ADRs: ADR-006_
 ##### Performance Considerations
 
 - Build cost dominated by sharp image processing; acceptable for current asset count.
-- `useEffect` without dependency array re-runs highlighting each render (ADR-003).
 
 _Source ADRs: ADR-003_
 
 ##### Evolution Considerations
 
-- Upgrade blockers: highlight.js v11 (`initHighlighting` removed), deprecated `keyCode`
-  (ADR-003); exact remark pin (ADR-006).
+- Upgrade blockers: deprecated `keyCode` (ADR-003); exact remark pin (ADR-006).
+  highlight.js was removed on 2026-10-26.
 - Lint toolchain is installed but non-functional (no `eslint.config.*`, plugin majors mismatch
   ESLint 9) — either configure or remove (ADR-006).
 - Build config not in repo; committing `netlify.toml` would make builds reproducible (ADR-004).
@@ -614,14 +603,13 @@ _Source: [.specify/architect/views/system/deployment.md](.specify/architect/view
 | Scalability | Scales with CDN; audience size not a constraint | ADR-004 |
 | Repeat/offline loads | Served from service-worker cache | ADR-005 |
 | Critical path | Same-origin self-hosted font (~31 KB woff2, `font-display: swap`) | ADR-005 |
-| Runtime hot path | Code highlighting re-runs every render (no dependency array) | ADR-003 |
+| Bundle size | ~33 KB compressed app bundle after removing unused highlight.js (was 308 KB) | ADR-003 |
 | Build time | Dominated by sharp image processing; acceptable at ~45 slides | ADR-002 |
 
 ### 4.3 Evolution Perspective
 
 | Change Driver | Current Blocker / Risk | Recommended Direction | ADR |
 |---------------|------------------------|-----------------------|-----|
-| highlight.js v11 | `initHighlighting()` removed | Switch to `highlightAll()` or build-time highlighting | ADR-003, ADR-006 |
 | Keyboard API | `keyCode` deprecated | Use `KeyboardEvent.key` | ADR-003 |
 | Markdown renderer changes | Split on literal `<hr>` may silently fail | Split on Markdown AST `thematicBreak` | ADR-002 |
 | Gatsby / Node upgrades | Exact `gatsby-transformer-remark` pin; Netlify Node version must match `engines` | Re-test pin each upgrade; commit `netlify.toml` | ADR-004, ADR-006 |
@@ -637,7 +625,7 @@ Canonical ADRs: [`.specify/memory/adr/index.md`](.specify/memory/adr/index.md) (
 |----|----------|--------|---------------|
 | [ADR-001](.specify/memory/adr/ADR-001.md) | Slide deck built as a static-site-generated web app (Gatsby) | Accepted | Context, Functional, Development |
 | [ADR-002](.specify/memory/adr/ADR-002.md) | Markdown files split on `<hr>`, ordered by file path, positional URLs | Accepted | Functional, Information |
-| [ADR-003](.specify/memory/adr/ADR-003.md) | In-house presentation runtime (navigation, transitions, highlighting) | Accepted | Functional, Development |
+| [ADR-003](.specify/memory/adr/ADR-003.md) | In-house presentation runtime (navigation, transitions) | Accepted | Functional, Development |
 | [ADR-004](.specify/memory/adr/ADR-004.md) | Netlify hosting from `master`, settings in UI, no repo CI | Accepted | Context, Deployment |
 | [ADR-005](.specify/memory/adr/ADR-005.md) | Offline-capable PWA via service worker (deliberate) | Accepted | Functional, Information, Deployment |
 | [ADR-006](.specify/memory/adr/ADR-006.md) | Incremental upgrades of the 2020 starter; security pins | Accepted | Development, Deployment |
@@ -649,7 +637,7 @@ Canonical ADRs: [`.specify/memory/adr/index.md`](.specify/memory/adr/index.md) (
 | Content | Markdown (`src/slides/`), local images (`src/resources/`) |
 | Site generator | Gatsby 5 (`gatsby-source-filesystem`, `gatsby-transformer-remark` 6.16.0, sharp plugins) |
 | UI | React 18, `react-helmet`, `gatsby-plugin-layout` |
-| Presentation runtime | `react-swipeable`, `react-transition-group`, `highlight.js` 10 |
+| Presentation runtime | `react-swipeable`, `react-transition-group` |
 | Offline | `gatsby-plugin-offline` |
 | Hosting | Netlify (`gatsby-adapter-netlify`), source on GitHub |
 | Tooling | Node.js >= 22, Yarn lockfile, Prettier + Husky pre-commit; ESLint 9 (unconfigured) |

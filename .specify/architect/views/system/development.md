@@ -24,7 +24,7 @@ introduction-to-data-engineering/
     ├── slides/             # Slide Content Store: NN-topic[NN].md (~45 files)
     ├── resources/          # Images (logo, diagrams, photos)
     ├── templates/slide.js  # Renders one slide's HTML
-    ├── layouts/index.js    # Presentation Shell + Navigation Controller + Code Highlighter
+    ├── layouts/index.js    # Presentation Shell + Navigation Controller
     ├── layouts/index.css   # Deck styling
     ├── components/transition.js  # Transition Animator
     └── pages/              # index.js (redirect / → /1), 404.js
@@ -43,7 +43,6 @@ introduction-to-data-engineering/
 | Presentation Shell layout | gatsby-plugin-layout, react-helmet | ^4.12 / ^6.1 | ADR-003 |
 | Navigation Controller (touch) | react-swipeable | ^6.1.2 | ADR-003 |
 | Transition Animator | react-transition-group | ^4.3.0 | ADR-003 |
-| Code Highlighter | highlight.js (darcula theme) | ^10.7.3 (held below v11) | ADR-003, ADR-006 |
 | Offline Cache | gatsby-plugin-offline | ^6.16.0 | ADR-005 |
 | Hosting adapter | gatsby-adapter-netlify | ^1.4.0 | ADR-004 |
 | Security pins | tar-fs, cookie, @expo/devcert | ^3.1.1 / ^0.7.2 / ^1.2.1 | ADR-006 |
@@ -66,7 +65,6 @@ graph LR
         Layout["layouts/index.js"]
         Swipe["react-swipeable"]
         RTG["react-transition-group"]
-        HLJS["highlight.js 10"]
         SW["service worker (offline)"]
     end
     Gatsby --> Remark --> Node
@@ -75,7 +73,6 @@ graph LR
     React --> Layout
     Layout --> Swipe
     Layout --> RTG
-    Layout --> HLJS
     Gatsby -->|"generates"| SW
 ```
 
@@ -85,7 +82,7 @@ graph LR
 |--------|------------|-------|
 | `gatsby-node.js` | Remark nodes (GraphQL), `src/templates/slide.js` | Sorts, splits on `<hr>`, creates `Slide` type and pages |
 | `src/templates/slide.js` | `Slide` GraphQL type | Injects HTML via `dangerouslySetInnerHTML` |
-| `src/layouts/index.js` | `site.siteMetadata`, `allSlide` count, transition, highlight.js, swipeable, logo | Global keydown listener |
+| `src/layouts/index.js` | `site.siteMetadata`, `allSlide` count, transition, swipeable, logo | Global keydown listener |
 | `src/components/transition.js` | react-transition-group | Keyed on `location.pathname` |
 | `src/pages/index.js` | Gatsby `navigate` | Redirects to `/1` |
 
@@ -123,14 +120,13 @@ _Source ADRs: ADR-006_
 ### Performance Considerations
 
 - Build cost dominated by sharp image processing; acceptable for current asset count.
-- `useEffect` without dependency array re-runs highlighting each render (ADR-003).
 
 _Source ADRs: ADR-003_
 
 ### Evolution Considerations
 
-- Upgrade blockers: highlight.js v11 (`initHighlighting` removed), deprecated `keyCode`
-  (ADR-003); exact remark pin (ADR-006).
+- Upgrade blockers: deprecated `keyCode` (ADR-003); exact remark pin (ADR-006).
+  highlight.js was removed on 2026-10-26.
 - Lint toolchain is installed but non-functional (no `eslint.config.*`, plugin majors mismatch
   ESLint 9) — either configure or remove (ADR-006).
 - Build config not in repo; committing `netlify.toml` would make builds reproducible (ADR-004).
