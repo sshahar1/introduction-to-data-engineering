@@ -7,4 +7,4 @@ title: "About Me"
 * Over 20 years of experience in backend systems
 * Love Israeli folk dancing
 
-![Me](me.JPG)
+![Me](../resources/me.JPG)
