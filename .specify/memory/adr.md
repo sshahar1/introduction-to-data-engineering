@@ -175,7 +175,7 @@ transitions, and code highlighting.
 - `highlight.js` ^10.7.3 `hljs.initHighlighting()` run client-side in `useEffect`, resetting
   `initHighlighting.called` on cleanup
 - `src/templates/slide.js`: slide HTML injected via `dangerouslySetInnerHTML`
-- Footer with Tikal logo, title, slide index; Google Fonts (Quicksand) loaded via Helmet
+- Footer with Tikal logo, title, slide index; Quicksand font (self-hosted since 2026-10-26, see ADR-005)
 
 ### Decision
 Presentation behaviour is implemented by a small custom React layer on top of Gatsby routing
@@ -304,7 +304,8 @@ A live talk may be given on unreliable venue networks.
 **Evidence Found**:
 - `gatsby-config.js`: `gatsby-plugin-offline` enabled (service worker, precached pages/assets)
 - No `gatsby-plugin-manifest` configured (no install manifest/icons)
-- `src/layouts/index.js`: Quicksand font loaded from `fonts.googleapis.com` at runtime
+- Quicksand 400 self-hosted in `src/resources/fonts/` (woff2, OFL 1.1) via `@font-face` in
+  `src/layouts/index.css` (since 2026-10-26; previously loaded from Google Fonts)
 - Images local in `src/resources/` processed by `gatsby-remark-images` (maxWidth 1920)
 
 ### Decision
@@ -317,7 +318,6 @@ The deck registers a service worker so previously visited content works offline.
 
 #### Negative (Potential)
 - Service-worker caching can serve stale slides after a redeploy until the worker updates
-- Remote Google Font is not guaranteed offline; falls back to system font
 - Without a manifest, it is offline-capable but not installable
 
 #### Risks
@@ -334,8 +334,9 @@ The deck registers a service worker so previously visited content works offline.
 
 ### Clarifications
 - 2026-10-26: Owner confirmed offline support is **deliberate** — the deck must be presentable
-  without venue network. Follow-up: self-host the Quicksand font so typography also works
-  offline.
+  without venue network.
+- 2026-10-26: Quicksand font self-hosted (weight 400 only, matching what Google Fonts served)
+  so typography also works offline.
 
 ### Confidence Level
 HIGH - Plugin enabled and intent confirmed by owner (2026-10-26).

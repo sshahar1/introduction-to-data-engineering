@@ -32,7 +32,6 @@ graph LR
     CDN["Netlify CDN edge"]
     BR["Audience / presenter browser"]
     SW["Service-worker cache<br/>(in browser)"]
-    GF["Google Fonts"]
 
     Dev -->|"git push (SSH)"| GH
     GH -->|"webhook: build master"| NB
@@ -41,7 +40,6 @@ graph LR
     CDN -->|"HTTPS static files"| BR
     BR -->|"precache"| SW
     SW -->|"offline responses"| BR
-    BR -->|"HTTPS font CSS + files"| GF
 ```
 
 ### 3.6.3 Hardware Requirements
@@ -58,7 +56,6 @@ graph LR
 |---------|---------|----------|------|
 | Static hosting, CDN, builds | Production site | Netlify | Not recorded in repo (UI setting) |
 | Source hosting, build trigger | Repository `sshahar1/introduction-to-data-engineering` | GitHub | Not recorded |
-| Web fonts | Quicksand typeface | Google Fonts | Free |
 | Package registry | Build-time dependencies | npm | Public |
 
 ---
@@ -79,7 +76,7 @@ _Source ADRs: ADR-004, ADR-006_
 
 - Static files from CDN edge; latency bound by network, not compute.
 - Repeat and offline visits served from service-worker cache (ADR-005).
-- Google Fonts is a cross-origin request on first paint; self-hosting would remove it.
+- Quicksand (400, ~31 KB woff2) is self-hosted and cached by the service worker on first visit (ADR-005).
 
 _Source ADRs: ADR-001, ADR-005_
 
