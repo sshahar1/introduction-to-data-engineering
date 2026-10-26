@@ -1,0 +1,23 @@
+{
+  "integration": "speckit",
+  "version": "1.0.4+adlc3",
+  "installed_at": "2026-10-26T09:48:16.289687+00:00",
+  "files": {
+    ".specify/scripts/bash/common.sh": "9d8c18da00e2309102fe2f3548d6f71566ad286caf2081464f5f2d67e2e32e66",
+    ".specify/scripts/bash/implement.sh": "09fb8ade9ba170a606c6b02a8c93381198f111fc8b35d5122828fe53b0c34b30",
+    ".specify/scripts/bash/generate-risk-tests.sh": "ef4ffa3f72f2008988b9465e689de7f1d618c8aba5e7f73d605a2c66bed2f8f0",
+    ".specify/scripts/bash/setup-plan.sh": "d0bd298c026446f3c63167130d65e49e4aa4485de6bef18bcdfd57b19aa0de96",
+    ".specify/scripts/bash/setup-tasks.sh": "eaadf9b1ed1aa8390e9da2d02082331aa8a82602d5460f85851ad569b0fd5bb1",
+    ".specify/scripts/bash/check-prerequisites.sh": "9388cfaf4167a5c889754640693f5c0cb9e33726b811e3f95ceb88c4c6834eab",
+    ".specify/scripts/bash/resolve-template.sh": "829e227096abc8bf0889889ec9f792f503ca5d395b7836a8a7eb739ee75214e7",
+    ".specify/scripts/bash/scan-project-artifacts.sh": "54b47f5710a8c65d2f94f8ee806a893b5da64882af724d01462455d9622fcd32",
+    ".specify/scripts/bash/tasks-meta-utils.sh": "81eb5b35224973305f817d8c44cca1618bc83ba3563e38d715bac344c6be0fe8",
+    ".specify/scripts/bash/create-new-feature.sh": "06ef9e88ad96fd8bb5b680a5a9f01137a2657a4224562c00b098c631703f6ecb",
+    ".specify/templates/constitution-template.md": "ce7549540fa45543cca797a150201d868e64495fdff39dc38246fb17bd4024b3",
+    ".specify/templates/checklist-template.md": "346f5d580c218775a139f69cc67ff662a7fe46be1b4e5d5d1bb07406705ac335",
+    ".specify/templates/tasks-template.md": "824264c9a555d58bc831d0e7831628121d6e0b16b66fe92b65e74f31fea38ec7",
+    ".specify/templates/spec-template.md": "3945437fc35cd30a5b2bf7beea680337c3516826d3efa5a6b92c4a7eca1ba28e",
+    ".specify/templates/plan-template.md": "af2c4436a91110ff50da634acff64ce11d530f50e1755ce55eb876680c313177",
+    ".specify/.gitignore": "8c908410d177a1ef3d0dee16d7ad55f2ac3333df3104c4d4adee1c9b82f1dbc1"
+  }
+}

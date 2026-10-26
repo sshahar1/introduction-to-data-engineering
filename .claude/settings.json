@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR}/.specify/events.py\" speckit.agent-context.update session_start 60",
+            "timeout": 65,
+            "__speckit_event__": true
+          }
+        ]
+      }
+    ]
+  }
+}

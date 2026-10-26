@@ -1,0 +1,33 @@
+{
+  "integration": "claude",
+  "version": "unknown",
+  "installed_at": "2026-10-26T09:48:16.264952+00:00",
+  "files": {
+    ".claude/skills/speckit-analyze/SKILL.md": "e0a511f823e881094f680be28ba19f205cf89a636d811e7aa0075bd551adb10d",
+    ".claude/skills/speckit-clarify/SKILL.md": "4732f43eefd955f4c0e3d7868a6a214911944a35c3a94ae065422906aa7e19d7",
+    ".claude/skills/speckit-constitution/SKILL.md": "0861fbad60315c0817cad4c2e7bd9b7373f6cbf23483dcb3d297bdad8d59e196",
+    ".claude/skills/speckit-implement/SKILL.md": "12d3df7d396b8ebd27860ffeeb9d405a128c1d4913e6bdbcf7faa59c3b4af45b",
+    ".claude/skills/speckit-converge/SKILL.md": "3521aa8ee22ba5e401e58d3aa7a3a7fae17c58e85fb426866a9368c39223e912",
+    ".claude/skills/speckit-plan/SKILL.md": "97e356df0afa888eb507993b5a1fcbc3c4c3db8e17a5897b6ce7e7f6ff3953f0",
+    ".claude/skills/speckit-checklist/SKILL.md": "2db83109feba7cc2902ffe30497ea035de663a2b7e5bc8c68335120e683d7da6",
+    ".claude/skills/speckit-specify/SKILL.md": "f9857c598d6c20b42c00d9fbb2169dcc400f614311ce686e3aff71d32357729b",
+    ".claude/skills/speckit-tasks/SKILL.md": "894ef0a3c4f1bfede6722105dbeb4b433e1fd07ecc78c105ce96868ce0d8d852",
+    ".claude/skills/speckit-taskstoissues/SKILL.md": "13df3305aac3979c92930a80cf1224f7a620fbabb242aee0bfd789d252976257",
+    ".claude/skills/team-discover/SKILL.md": "95a5edc6b517789a5c121346d609fde59a5ac013d9256e8a32989ff59eb82d9d",
+    ".claude/skills/team-repair/SKILL.md": "06ae35974440f7e6b530b1489e7475b3dd5d8f46ed290b277a9c7ce5ea46112c",
+    ".claude/skills/team-skills/SKILL.md": "823f2b166612da793999264a5e47beda96b319355e561758bcb0ff6f623b9489",
+    ".claude/skills/team-boot/SKILL.md": "f7c37703ffcc584969affb104d2ef50ef183b2da8d752dbb221756503056beb0",
+    ".claude/skills/team-curate/SKILL.md": "ae3d950b4893ba57835716a6154a1c5236fe8d708a76d008b9d40874da56b152",
+    ".claude/skills/dbt-template/SKILL.md": "1c0b1641eb616ffca0452b3a58163ea24121273d6b7821dcf79bbe146816dde1",
+    ".claude/skills/speckit-agent-context-update/SKILL.md": "559eca8af6e7d32ea9a04b317ac19b3764a8bd39807d20dadefc610e8bbab20f",
+    ".claude/skills/team-evolve/SKILL.md": "8a4e9f26005b35431aa69d568668235d477622e30fba8966a635d48e268e1d9f",
+    ".claude/skills/crossplane/SKILL.md": "4220cfe07b5f0434610599edd571e9f605793aa9c9df58db6384dc5a7c31ce53",
+    ".claude/skills/team-verify/SKILL.md": "88240d977bdc7619cec1c760158f8532275914ac8e741a790506fca1e356237b",
+    ".claude/skills/gke-workload-identity/SKILL.md": "c977f2c77ce5f8f87da8caa1228d383a5b3b6b694f0cd1a2f13049f418d7f2a1",
+    ".claude/skills/external-secrets/SKILL.md": "3e49eb0d79fa0dcae1cd17e7d9a106c6c00dc3b93fbc8f19d76beb1385d46807",
+    ".claude/skills/helm-charts/SKILL.md": "ad1297238cba9d9475fb1610f0c938902a179f8c194e0f17da052c24c58d7ce3",
+    ".claude/skills/github-actions/SKILL.md": "b09209651c43c28a96f7b8f68ad20e705f32670745070d2f54e55fb08d132e33",
+    ".specify/events.py": "0f5107338c56ea58a51fa39592929bfaba4d645e4e4c8495d5d8fdddb1213b93",
+    ".claude/settings.json": "78d90eaf61ae56183fd8868dbcb658ef62516c55c91f49743cd21fdae1a8e12c"
+  }
+}
