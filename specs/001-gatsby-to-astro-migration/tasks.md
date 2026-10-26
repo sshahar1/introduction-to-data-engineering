@@ -149,7 +149,7 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 
 - [x] T023 [US4] Run quickstart.md V2. Add a temporary `src/slides/11-persisting045.md` with two chunks separated by a blank line and `---`, plus one setext heading (`Title` followed directly by `---`). Confirm two slides appear right after the `11-persisting04` slide and the setext line renders as `<h2>`. Then delete the file (FR-002, FR-003).
 - [x] T024 [US4] Run `yarn clean`, `yarn develop`, `yarn build`, `yarn serve` and `yarn format`. Confirm each works and that `yarn format` reformats `.astro` files. Make a trivial whitespace edit in `src/layouts/Deck.astro` and commit it to confirm the husky pre-commit hook (`.husky/pre-commit`) formats it (FR-022).
-- [ ] T025 [US4] Before pushing, check the Netlify site in the dashboard:
+- [ ] T025 [US4] *(dashboard checked 2026-10-26: Runtime not set, no Gatsby leftovers)* Before pushing, check the Netlify site in the dashboard:
   - **Site configuration → Build & deploy → Build plugins**: no Gatsby plugin, e.g. `@netlify/plugin-gatsby` or "Essential Gatsby".
   - **Build settings**: framework not pinned to Gatsby.
 
