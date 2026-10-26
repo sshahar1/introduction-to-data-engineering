@@ -65,6 +65,9 @@ graph LR
 ### Security Considerations
 
 - Public, unauthenticated, read-only site over HTTPS; no server-side attack surface.
+- Response headers: HSTS from Netlify, Gatsby defaults (`nosniff`, `x-frame-options: DENY`,
+  `referrer-policy`), plus a same-origin `Content-Security-Policy` and a deny-all
+  `Permissions-Policy` from `gatsby-config.js` (ADR-003).
 - Deploy authority = push access to `master` on GitHub plus Netlify account access; protect
   both (ADR-004).
 - Build runner executes npm install scripts — supply-chain exposure addressed by lockfile and

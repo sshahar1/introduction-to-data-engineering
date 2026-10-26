@@ -195,7 +195,9 @@ rather than a slide framework: each slide is a route, navigation is a client-sid
 
 #### Risks
 - Security: `dangerouslySetInnerHTML` is acceptable only because content is author-controlled
-  Markdown built at compile time; accepting external content would open XSS
+  Markdown built at compile time; accepting external content would open XSS. Mitigation
+  (2026-10-26): same-origin Content-Security-Policy in `gatsby-config.js` blocks third-party
+  scripts, plugins and framing; `'unsafe-inline'` remains because of Gatsby's inline scripts
 - Performance: highlighting runs on every render (effect has no dependency array)
 
 ### Common Alternatives
