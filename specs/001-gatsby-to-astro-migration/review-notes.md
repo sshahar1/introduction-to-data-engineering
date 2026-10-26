@@ -38,4 +38,10 @@ Production currently answers `/12` with **301 → `/12/`**, so links shared from
 
 | Slide | Size | Difference | Resolution |
 |---|---|---|---|
-| | | | |
+| deck-wide | desktop + mobile | Maintainer review (2026-10-26, `yarn serve` vs production): the deck "looks a little better than in Gatsby"; no regressions reported | Accepted as an improvement (A5) |
+
+**A5 (accepted)**: overall rendering judged slightly better than production; no specific slide flagged. The likely source is the optimised responsive images (A1) and the simpler page markup.
+
+## Navigation check (T018)
+
+Keys and swipes tried on the local build (2026-10-26); maintainer confirmed with no issues reported.

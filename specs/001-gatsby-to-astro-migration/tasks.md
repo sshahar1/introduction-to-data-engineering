@@ -99,7 +99,7 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
 **Independent Test**: quickstart.md V3. Side-by-side review of all 40 slides at desktop and mobile against the T001 baseline.
 
 - [x] T013 [US1] Compare the image slides `/3` (me.JPG), `/9` (CAP-Theorem-last.jpg) and `/39` (Casestudy.png), all now in `src/resources/`, against the baseline. If centring or size differs, add a scoped rule to `src/layouts/index.css`, e.g. `.slide-content img { display: block; margin: 0 auto; }`, matching Gatsby's `gatsby-resp-image-wrapper` (research R5). Otherwise leave the CSS untouched.
-- [ ] T014 [US1] Do the full side-by-side review of quickstart.md V3 (40 slides × 2 sizes = 80 comparisons) against the T001 baseline, using `yarn build && yarn serve`. Check footer colour, logo and number, the browser tab title, list and blockquote indentation, and the ≤ 600px font size. Record every noticed difference, with its resolution or acceptance, in `specs/001-gatsby-to-astro-migration/review-notes.md` (FR-014, SC-001).
+- [x] T014 [US1] Do the full side-by-side review of quickstart.md V3 (40 slides × 2 sizes = 80 comparisons) against the T001 baseline, using `yarn build && yarn serve`. Check footer colour, logo and number, the browser tab title, list and blockquote indentation, and the ≤ 600px font size. Record every noticed difference, with its resolution or acceptance, in `specs/001-gatsby-to-astro-migration/review-notes.md` (FR-014, SC-001).
 - [x] T015 [US1] In DevTools Network on `/1`, confirm the fonts load from the site's own origin (`/_astro/*.woff2`) and nothing is requested from a third-party host (FR-009).
 
 **Checkpoint**: The deck looks identical. Commit.
@@ -120,7 +120,7 @@ description: "Task list for migrating the slide deck from Gatsby to Astro"
   - Add `<ClientRouter />` (from `astro:transitions`) to `<head>`.
   - Put `transition:animate="none"` on `<html>`, `transition:animate={fade({ duration: '0.2s' })}` on `#slide`, and `transition:animate="none"` on `<footer>`.
   - Add `<script>import '../scripts/navigation.js';</script>` at the end of `<body>` (research R4).
-- [ ] T018 [US2] Run quickstart.md V4: three positions × five inputs. Also hold → from `/38` and confirm it stops at `/40` with no overlap. Fix `src/scripts/navigation.js` if anything fails (FR-013, FR-015, FR-016, SC-002).
+- [x] T018 [US2] Run quickstart.md V4: three positions × five inputs. Also hold → from `/38` and confirm it stops at `/40` with no overlap. Fix `src/scripts/navigation.js` if anything fails (FR-013, FR-015, FR-016, SC-002).
 
 **Checkpoint**: Keyboard and swipe navigation and the fade all work. Commit.
 
