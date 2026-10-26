@@ -8,15 +8,15 @@
       "evolution"
     ],
     "clarify_completed": true,
-    "clarify_completed_at": "2026-10-26T10:00:53Z",
-    "adrs_approved_count": 6,
-    "implement_started": true,
-    "implement_started_at": "2026-10-26T10:01:51Z"
+    "clarify_completed_at": "2026-10-26T15:04:17Z",
+    "adrs_approved_count": 8,
+    "implement_started": false,
+    "implement_started_at": null
   },
   "version": "1.1.0",
   "created_at": "2026-10-26T10:01:51Z",
-  "updated_at": "2026-10-26T10:12:59Z",
-  "phase": "completed",
+  "updated_at": "2026-10-26T15:04:17Z",
+  "phase": "clarified",
   "views_mode": "core",
   "subsystems": [
     {
@@ -28,7 +28,9 @@
         "ADR-003",
         "ADR-004",
         "ADR-005",
-        "ADR-006"
+        "ADR-006",
+        "ADR-007",
+        "ADR-008"
       ],
       "characteristics": [
         "monolith",
