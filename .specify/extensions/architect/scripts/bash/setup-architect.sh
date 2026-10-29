@@ -705,8 +705,8 @@ generate_adr_index() {
         [[ -z "$owner" ]] && owner=""
         [[ -z "$subsystem" ]] && subsystem="System"
 
-        index_content+="| ADR-$(printf "%03d" "$id") | $subsystem | $title | $status | $date | $owner | [$fname]($fname) |\n"
-        quick_links+="- [ADR-$(printf "%03d" "$id"): $title]($fname)\n"
+        index_content+="| ADR-$(printf "%03d" "$((10#${id:-0}))") | $subsystem | $title | $status | $date | $owner | [$fname]($fname) |\n"
+        quick_links+="- [ADR-$(printf "%03d" "$((10#${id:-0}))"): $title]($fname)\n"
     done
 
     echo -e "${index_content}\n${quick_links}" > "$index_file"
@@ -759,7 +759,7 @@ regenerate_legacy_monolith() {
         [[ -z "$owner" ]] && owner=""
         [[ -z "$subsystem" ]] && subsystem="System"
 
-        monolith+="| ADR-$(printf "%03d" "$id") | $subsystem | $title | $status | $date | $owner |\n"
+        monolith+="| ADR-$(printf "%03d" "$((10#${id:-0}))") | $subsystem | $title | $status | $date | $owner |\n"
 
         sections+=$'\n---\n\n'
         sections+=$(cat "$f")
@@ -784,7 +784,7 @@ get_adr_by_id() {
     local numeric_id
     numeric_id=$(echo "$adr_id" | sed -E 's/[^0-9]//g')
     local padded_id
-    padded_id=$(printf "%03d" "$numeric_id")
+    padded_id=$(printf "%03d" "$((10#${numeric_id:-0}))")
 
     # Try hybrid first
     local hybrid_file="$adr_dir/ADR-$padded_id.md"
@@ -848,7 +848,7 @@ write_adr() {
     local numeric_id
     numeric_id=$(echo "$adr_id" | sed -E 's/[^0-9]//g')
     local padded_id
-    padded_id=$(printf "%03d" "$numeric_id")
+    padded_id=$(printf "%03d" "$((10#${numeric_id:-0}))")
 
     echo "$adr_content" > "$adr_dir/ADR-$padded_id.md"
 
@@ -869,7 +869,7 @@ move_adr() {
     local numeric_id
     numeric_id=$(echo "$adr_id" | sed -E 's/[^0-9]//g')
     local padded_id
-    padded_id=$(printf "%03d" "$numeric_id")
+    padded_id=$(printf "%03d" "$((10#${numeric_id:-0}))")
 
     mkdir -p "$to_dir"
 
