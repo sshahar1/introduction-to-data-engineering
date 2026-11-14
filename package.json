@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "author": "Sigal Shaharabani <sigals@tikalk.com>",
   "dependencies": {
-    "astro": "^7.4.2"
+    "astro": "^7.4.7"
   },
   "engines": {
     "node": ">=22.23.4"
