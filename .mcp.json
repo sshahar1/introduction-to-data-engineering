@@ -6,6 +6,10 @@
         "-y",
         "@upstash/context7-mcp"
       ]
+    },
+    "netlify-mcp": {
+      "type": "http",
+      "url": "https://netlify-mcp.netlify.app/mcp"
     }
   },
   "tools": {
