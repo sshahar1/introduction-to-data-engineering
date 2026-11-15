@@ -2,7 +2,7 @@
   "name": "introduction-to-data-engineering",
   "description": "Introduction to data engineering presentation with Astro",
   "version": "2.0.0",
-  "author": "Sigal Shaharabani <sigals@tikalk.com>",
+  "author": "Sigal Shaharabani",
   "dependencies": {
     "astro": "^7.4.7"
   },
